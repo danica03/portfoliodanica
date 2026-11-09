@@ -574,7 +574,7 @@ const projects = [
     },
     figmaDesktop: "https://www.figma.com/design/jvJ4BntYCixTh9fGGVgeJF/Multi-Language-Website?node-id=721-6825",
     figmaMobile:  "https://www.figma.com/design/jvJ4BntYCixTh9fGGVgeJF/Multi-Language-Website?node-id=649-1047",
-    figmaUrl: "https://www.figma.com/design/jvJ4BntYCixTh9fGGVgeJF/Multi-Language-Website?node-id=2457-1121&t=3UHY89FZadlfCcBq-1",
+    figmaUrl: "https://www.figma.com/design/FvihRcaG5dsLWXbgNR5Gem/Portfolio?node-id=17-27703&t=sNPD2urofmIYncQR-1",
     pdfUrl: ""
   },
   {
@@ -759,7 +759,8 @@ function figmaEmbed(url) {
 }
 
 function showScreens(p) {
-  const kinds = [['desktop', 'Desktop'], ['mobile', 'Mobile']].filter(([k]) => p.screens[k]);
+  const kinds = [['desktop', 'Desktop'], ['mobile', 'Mobile'], ['overview', 'Overview']]
+    .filter(([k]) => k === 'overview' ? p.figmaUrl : p.screens[k]);
   modalBody.classList.add('shots');
   modalBody.innerHTML =
     `<div class="shot-tabs">${kinds.map(([k, l], i) => `<button class="shot-tab${i ? '' : ' active'}" data-k="${k}">${l}</button>`).join('')}</div>` +
@@ -767,6 +768,10 @@ function showScreens(p) {
   const view = modalBody.querySelector('.shot-view');
   const render = k => {
     view.scrollTop = 0;
+    if (k === 'overview') {
+      view.innerHTML = `<iframe src="${figmaEmbed(p.figmaUrl)}" title="${p.title} — overview" allowfullscreen></iframe>`;
+      return;
+    }
     view.innerHTML = `<img class="shot-img ${k}" src="${p.screens[k]}" alt="${p.title} — ${k}">`;
     view.firstChild.onerror = () => {
       const f = k === 'mobile' ? p.figmaMobile : p.figmaDesktop;
