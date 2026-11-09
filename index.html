@@ -122,6 +122,11 @@ section { padding: 6rem 0; }
 
 /* ── PORTFOLIO ── */
 #portfolio { border-bottom: 1px solid var(--border); }
+.project-group { margin-top: 4rem; }
+.project-group:first-child { margin-top: 0; }
+.group-head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 0.85rem; border-bottom: 1px solid var(--border-md); }
+.group-title { font-family: var(--font-serif); font-size: clamp(1.4rem, 2.6vw, 1.9rem); font-weight: 400; line-height: 1.15; color: var(--text); }
+.group-count { font-size: 0.75rem; color: var(--text-dim); letter-spacing: 0.04em; }
 .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(278px, 1fr)); gap: 1.25rem; }
 
 .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; cursor: pointer; transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s; display: flex; flex-direction: column; }
@@ -383,7 +388,7 @@ footer { border-top: 1px solid var(--border); padding: 1.75rem 2.5rem; display: 
     <p class="section-eyebrow pink">Selected work</p>
     <h2 class="section-title">Projects</h2>
     <p class="section-desc">Each project shaped around the brief — with attention to clarity, usability, and visual craft.</p>
-    <div class="portfolio-grid" id="portfolioGrid"></div>
+    <div id="portfolioGrid"></div>
   </div>
 </section>
 
@@ -543,6 +548,7 @@ footer { border-top: 1px solid var(--border); padding: 1.75rem 2.5rem; display: 
 /*
  * ✏️ EDIT YOUR PROJECTS HERE
  * ─────────────────────────────────────────────────
+ * group    → bagian tempat card tampil (harus sama persis dengan salah satu di groupOrder)
  * company  → nama perusahaan
  * title    → nama project
  * desc     → deskripsi singkat
@@ -559,6 +565,7 @@ footer { border-top: 1px solid var(--border); padding: 1.75rem 2.5rem; display: 
 const projects = [
   {
     company: "Desa Potato Head Bali",
+    group: "Potato Head UI/UX Design",
     title: "Hotel Website Multi Language",
     desc: "Multi-language website for Potato Head Suites and Hotel — responsive desktop and mobile designs, shown in its Korean version.",
     tag: "Website", color: "pink",
@@ -573,6 +580,7 @@ const projects = [
   },
   {
     company: "Potato Head Beach Club",
+    group: "Potato Head UI/UX Design",
     title: "Booking System",
     desc: "Responsive reservation flow for the beach club — designed for mobile and desktop, optimised for conversion.",
     tag: "Booking System", color: "blue",
@@ -586,6 +594,7 @@ const projects = [
   },
   {
     company: "Desa Potato Head",
+    group: "Potato Head UI/UX Design",
     title: "Regenerate",
     desc: "Content page presenting Potato Head's regenerative philosophy, story, commitment, and actions — with a sticky section menu.",
     tag: "Website", color: "yellow",
@@ -599,6 +608,7 @@ const projects = [
   },
   {
     company: "Desa Potato Head",
+    group: "Potato Head UI/UX Design",
     title: "Wellbeing",
     desc: "Wellbeing page introducing Potato Head's approach to rest and balance — events, Desa Spa, experiences, and facilities.",
     tag: "Website", color: "pink",
@@ -612,6 +622,7 @@ const projects = [
   },
   {
     company: "Desa Potato Head",
+    group: "Potato Head UI/UX Design",
     title: "What's On",
     desc: "Events and journals page — featured highlights, upcoming events carousel, and direct ticket links.",
     tag: "Website", color: "blue",
@@ -625,6 +636,7 @@ const projects = [
   },
   {
     company: "Desa Potato Head",
+    group: "Potato Head UI/UX Design",
     title: "Special Offers",
     desc: "Special offers page for Potato Head Suites and Hotel — offer cards with inclusions, terms, and direct booking.",
     tag: "Website", color: "pink",
@@ -638,6 +650,7 @@ const projects = [
   },
   {
     company: "Desa Potato Head",
+    group: "Potato Head UI/UX Design",
     title: "Shop",
     desc: "Online shop pages for the brand's merchandise — product browsing and purchase flow on desktop and mobile.",
     tag: "E-commerce", color: "yellow",
@@ -651,6 +664,7 @@ const projects = [
   },
   {
     company: "Desa Potato Head",
+    group: "Potato Head UI/UX Design",
     title: "Ticketing",
     desc: "Event ticketing pages — ticket selection and purchase flow on desktop and mobile.",
     tag: "Ticketing", color: "blue",
@@ -664,6 +678,7 @@ const projects = [
   },
   {
     company: "KLYMAX Discotheque",
+    group: "Potato Head UI/UX Design",
     title: "Klymax Landing Page",
     desc: "Landing page for KLYMAX Discotheque.",
     tag: "Landing Page", color: "pink",
@@ -676,6 +691,7 @@ const projects = [
   },
   {
     company: "KLYMAX Discotheque",
+    group: "Potato Head UI/UX Design",
     title: "Klymax Ads",
     desc: "Ad designs for KLYMAX Discotheque, adapted for desktop and mobile.",
     tag: "Ads", color: "yellow",
@@ -689,6 +705,7 @@ const projects = [
   },
   {
     company: "Desa Potato Head",
+    group: "Potato Head UI/UX Design",
     title: "Event Landing Page — Feast",
     desc: "Event landing page for Feast at Desa Potato Head.",
     tag: "Landing Page", color: "blue",
@@ -701,6 +718,7 @@ const projects = [
   },
   {
     company: "Desa Potato Head",
+    group: "Potato Head UI/UX Design",
     title: "Event Landing Page — Wellbeing",
     desc: "Event landing page for the Wellbeing programme at Desa Potato Head.",
     tag: "Landing Page", color: "pink",
@@ -712,15 +730,8 @@ const projects = [
     pdfUrl: ""
   },
   {
-    company: "KLYMAX Discotheque",
-    title: "Event Ticketing & Website",
-    desc: "End-to-end event ticketing — listed on two platforms, integrated into the Klymax website with full QA.",
-    tag: "Ticketing", color: "pink",
-    tools: ["Figma", "Framer"],
-    image: "", pdfUrl: ""
-  },
-  {
     company: "Desa Potato Head",
+    group: "Potato Head Newsletter",
     title: "Email Newsletter System",
     desc: "Recurring newsletter design from brief to scheduled send — layouts built in Figma and published via Revinate.",
     tag: "Newsletter", color: "blue",
@@ -729,6 +740,7 @@ const projects = [
   },
   {
     company: "Rumah Sakit Advent Manado",
+    group: "Others",
     title: "Hospital Internal System",
     desc: "User research-driven design for clinical and administrative workflows — validated through iterative user testing.",
     tag: "Healthcare", color: "blue",
@@ -737,6 +749,7 @@ const projects = [
   },
   {
     company: "Nadi Health",
+    group: "Nadi Health",
     title: "My Pharma Module",
     desc: "High-fidelity designs for the refund flow — contributed to a 35% improvement in user flow efficiency.",
     tag: "Health Tech", color: "pink",
@@ -745,6 +758,7 @@ const projects = [
   },
   {
     company: "Nadi Health",
+    group: "Nadi Health",
     title: "Cross-Platform UI Optimization",
     desc: "Optimized screen layouts across web and mobile for cross-browser and multi-device compatibility.",
     tag: "Mobile & Web", color: "yellow",
@@ -753,6 +767,7 @@ const projects = [
   },
   {
     company: "Ever (Freelance)",
+    group: "Ever",
     title: "Client Websites & Mobile Apps",
     desc: "Lo-fi to hi-fi prototypes for client products — wireframes, style guides, and engineer-ready handovers.",
     tag: "Freelance", color: "pink",
@@ -761,6 +776,7 @@ const projects = [
   },
   {
     company: "Klabat Tekno Perkasa",
+    group: "Others",
     title: "Web & Mobile Prototypes",
     desc: "Designed and coded UI components in React Native — reusable code that reduced project costs.",
     tag: "Mobile", color: "blue",
@@ -769,10 +785,146 @@ const projects = [
   },
   {
     company: "Desa Potato Head",
+    group: "Others",
     title: "Strapi CMS Management",
     desc: "Back-end content management via Strapi — kept website content accurate, current, and brand-consistent.",
     tag: "CMS", color: "yellow",
     tools: ["Strapi", "HTML/CSS"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Desa Potato Head",
+    group: "Potato Head Newsletter",
+    title: "Coming Soon",
+    desc: "Placeholder — edit the projects array in the HTML file to add your real project details here.",
+    tag: "Newsletter", color: "blue",
+    tools: ["Figma"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Desa Potato Head",
+    group: "Potato Head Newsletter",
+    title: "Coming Soon",
+    desc: "Placeholder — edit the projects array in the HTML file to add your real project details here.",
+    tag: "Newsletter", color: "yellow",
+    tools: ["Figma"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Nadi Health",
+    group: "Nadi Health",
+    title: "Coming Soon",
+    desc: "Placeholder — edit the projects array in the HTML file to add your real project details here.",
+    tag: "Health Tech", color: "yellow",
+    tools: ["Figma"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Nadi Health",
+    group: "Nadi Health",
+    title: "Coming Soon",
+    desc: "Placeholder — edit the projects array in the HTML file to add your real project details here.",
+    tag: "Health Tech", color: "pink",
+    tools: ["Figma"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Nadi Health",
+    group: "Nadi Health",
+    title: "Coming Soon",
+    desc: "Placeholder — edit the projects array in the HTML file to add your real project details here.",
+    tag: "Health Tech", color: "blue",
+    tools: ["Figma"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Nadi Health",
+    group: "Nadi Health",
+    title: "Coming Soon",
+    desc: "Placeholder — edit the projects array in the HTML file to add your real project details here.",
+    tag: "Health Tech", color: "yellow",
+    tools: ["Figma"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Ever",
+    group: "Ever",
+    title: "Coming Soon",
+    desc: "Placeholder — edit the projects array in the HTML file to add your real project details here.",
+    tag: "Freelance", color: "blue",
+    tools: ["Figma"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Ever",
+    group: "Ever",
+    title: "Coming Soon",
+    desc: "Placeholder — edit the projects array in the HTML file to add your real project details here.",
+    tag: "Freelance", color: "yellow",
+    tools: ["Figma"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Ever",
+    group: "Ever",
+    title: "Coming Soon",
+    desc: "Placeholder — edit the projects array in the HTML file to add your real project details here.",
+    tag: "Freelance", color: "pink",
+    tools: ["Figma"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Ever",
+    group: "Ever",
+    title: "Coming Soon",
+    desc: "Placeholder — edit the projects array in the HTML file to add your real project details here.",
+    tag: "Freelance", color: "blue",
+    tools: ["Figma"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Ever",
+    group: "Ever",
+    title: "Coming Soon",
+    desc: "Placeholder — edit the projects array in the HTML file to add your real project details here.",
+    tag: "Freelance", color: "yellow",
+    tools: ["Figma"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Ever",
+    group: "Ever",
+    title: "Coming Soon",
+    desc: "Placeholder — edit the projects array in the HTML file to add your real project details here.",
+    tag: "Freelance", color: "pink",
+    tools: ["Figma"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Ever",
+    group: "Ever",
+    title: "Coming Soon",
+    desc: "Placeholder — edit the projects array in the HTML file to add your real project details here.",
+    tag: "Freelance", color: "blue",
+    tools: ["Figma"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Other",
+    group: "Others",
+    title: "Coming Soon",
+    desc: "Placeholder — edit the projects array in the HTML file to add your real project details here.",
+    tag: "Other", color: "pink",
+    tools: ["Figma"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Other",
+    group: "Others",
+    title: "Coming Soon",
+    desc: "Placeholder — edit the projects array in the HTML file to add your real project details here.",
+    tag: "Other", color: "blue",
+    tools: ["Figma"],
     image: "", pdfUrl: ""
   },
 ];
@@ -780,7 +932,17 @@ const projects = [
 const thumbBg   = { pink: '#FDE8F8', blue: '#E4F4FC', yellow: '#FDF7DC' };
 const thumbIcon = { pink: '#F384D4', blue: '#5AB5E8', yellow: '#EECD56' };
 
-const grid = document.getElementById('portfolioGrid');
+const groupOrder = ["Potato Head UI/UX Design", "Potato Head Newsletter", "Nadi Health", "Ever", "Others"];
+const root = document.getElementById('portfolioGrid');
+const gridFor = {};
+groupOrder.forEach(g => {
+  const sec = document.createElement('div');
+  sec.className = 'project-group';
+  const n = projects.filter(p => p.group === g).length;
+  sec.innerHTML = `<div class="group-head"><h3 class="group-title">${g}</h3><span class="group-count">${n} projects</span></div><div class="portfolio-grid"></div>`;
+  root.appendChild(sec);
+  gridFor[g] = sec.querySelector('.portfolio-grid');
+});
 projects.forEach(p => {
   const hasFigma = (p.figmaUrl && p.figmaUrl.trim() !== '') || !!p.prototypes;
   const hasPdf = hasFigma || (p.pdfUrl && p.pdfUrl.trim() !== '');
@@ -821,7 +983,7 @@ projects.forEach(p => {
 
   card.addEventListener('click', () => openModal(p));
   card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openModal(p); });
-  grid.appendChild(card);
+  (gridFor[p.group] || gridFor[groupOrder[0]]).appendChild(card);
 });
 
 const backdrop = document.getElementById('modalBackdrop');
