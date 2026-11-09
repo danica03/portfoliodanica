@@ -732,11 +732,15 @@ const projects = [
   {
     company: "Desa Potato Head",
     group: "Potato Head Newsletter",
-    title: "Email Newsletter System",
-    desc: "Recurring newsletter design from brief to scheduled send — layouts built in Figma and published via Revinate.",
+    title: "Newsletter - Event",
+    desc: "Event email newsletters for Potato Head — NYE, Dekmantel x Potato Head, Klymax, Super Club and Beach Club program launches, designed in Figma and sent via Revinate.",
     tag: "Newsletter", color: "blue",
     tools: ["Figma", "Revinate"],
-    image: "", pdfUrl: ""
+    image: "images/newsletter-event-cover.jpg",
+    prototypes: {
+      desktop: "https://www.figma.com/design/FvihRcaG5dsLWXbgNR5Gem/Portfolio?node-id=58-33634&t=sNPD2urofmIYncQR-4"
+    },
+    pdfUrl: ""
   },
   {
     company: "Rumah Sakit Advent Manado",
@@ -946,7 +950,7 @@ groupOrder.forEach(g => {
 projects.forEach(p => {
   const hasFigma = (p.figmaUrl && p.figmaUrl.trim() !== '') || !!p.prototypes;
   const hasPdf = hasFigma || (p.pdfUrl && p.pdfUrl.trim() !== '');
-  const badgeLabel = p.prototypes ? 'Prototype' : hasFigma ? 'Figma' : 'PDF';
+  const badgeLabel = p.prototypes ? (/figma\.com\/design\//.test(p.prototypes.desktop||p.prototypes.mobile||'') ? 'Design' : 'Prototype') : hasFigma ? 'Figma' : 'PDF';
   const hasImg = p.image && p.image.trim() !== '';
   const col = p.color || 'pink';
 
