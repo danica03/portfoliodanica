@@ -126,7 +126,7 @@ section { padding: 6rem 0; }
 
 .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; cursor: pointer; transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s; display: flex; flex-direction: column; }
 .project-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,0.09); border-color: var(--border-md); }
-.card-thumb { width: 100%; aspect-ratio: 16/10; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.card-thumb { width: 100%; aspect-ratio: 3/2; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
 .card-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform 0.4s; }
 .project-card:hover .card-thumb img { transform: scale(1.04); }
 .card-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; }
@@ -625,11 +625,91 @@ const projects = [
   },
   {
     company: "Desa Potato Head",
-    title: "Online Shop",
-    desc: "Designed the brand's online shop — showcasing and selling merchandise with a cohesive visual identity.",
+    title: "Special Offers",
+    desc: "Special offers page for Potato Head Suites and Hotel — offer cards with inclusions, terms, and direct booking.",
+    tag: "Website", color: "pink",
+    tools: ["Figma"],
+    image: "images/special-offers-cover.jpg",
+    prototypes: {
+      desktop: "https://www.figma.com/proto/FvihRcaG5dsLWXbgNR5Gem/Portfolio?node-id=13-30282&viewport=-1579%2C5848%2C0.3&t=uRDPbnVWJHUsPWqG-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=13%3A30282&page-id=13%3A7718&show-proto-sidebar=1",
+      mobile:  "https://www.figma.com/proto/FvihRcaG5dsLWXbgNR5Gem/Portfolio?node-id=13-30480&viewport=-1579%2C5848%2C0.3&t=uRDPbnVWJHUsPWqG-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=13%3A30480&page-id=13%3A7718&show-proto-sidebar=1"
+    },
+    pdfUrl: ""
+  },
+  {
+    company: "Desa Potato Head",
+    title: "Shop",
+    desc: "Online shop pages for the brand's merchandise — product browsing and purchase flow on desktop and mobile.",
     tag: "E-commerce", color: "yellow",
-    tools: ["Figma", "Framer"],
-    image: "", pdfUrl: ""
+    tools: ["Figma"],
+    image: "images/shop-cover.jpg",
+    prototypes: {
+      desktop: "https://www.figma.com/proto/FvihRcaG5dsLWXbgNR5Gem/Portfolio?node-id=14-46181&viewport=-1579%2C5848%2C0.3&t=uRDPbnVWJHUsPWqG-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=14%3A46181&page-id=13%3A7718&show-proto-sidebar=1",
+      mobile:  "https://www.figma.com/proto/FvihRcaG5dsLWXbgNR5Gem/Portfolio?node-id=14-45760&viewport=-1579%2C5848%2C0.3&t=uRDPbnVWJHUsPWqG-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=14%3A45760&page-id=13%3A7718&show-proto-sidebar=1"
+    },
+    pdfUrl: ""
+  },
+  {
+    company: "Desa Potato Head",
+    title: "Ticketing",
+    desc: "Event ticketing pages — ticket selection and purchase flow on desktop and mobile.",
+    tag: "Ticketing", color: "blue",
+    tools: ["Figma"],
+    image: "images/ticketing-cover.jpg",
+    prototypes: {
+      desktop: "https://www.figma.com/proto/FvihRcaG5dsLWXbgNR5Gem/Portfolio?node-id=14-54015&viewport=-1579%2C5848%2C0.3&t=uRDPbnVWJHUsPWqG-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=14%3A54015&page-id=13%3A7718&show-proto-sidebar=1",
+      mobile:  "https://www.figma.com/proto/FvihRcaG5dsLWXbgNR5Gem/Portfolio?node-id=14-54030&viewport=-1579%2C5848%2C0.3&t=uRDPbnVWJHUsPWqG-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=14%3A54030&page-id=13%3A7718&show-proto-sidebar=1"
+    },
+    pdfUrl: ""
+  },
+  {
+    company: "KLYMAX Discotheque",
+    title: "Klymax Landing Page",
+    desc: "Landing page for KLYMAX Discotheque.",
+    tag: "Landing Page", color: "pink",
+    tools: ["Figma"],
+    image: "images/klymax-landing-cover.jpg",
+    prototypes: {
+      desktop: "https://www.figma.com/proto/FvihRcaG5dsLWXbgNR5Gem/Portfolio?node-id=14-36012&viewport=-1579%2C5848%2C0.3&t=uRDPbnVWJHUsPWqG-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=14%3A36012&page-id=13%3A7718&show-proto-sidebar=1"
+    },
+    pdfUrl: ""
+  },
+  {
+    company: "KLYMAX Discotheque",
+    title: "Klymax Ads",
+    desc: "Ad designs for KLYMAX Discotheque, adapted for desktop and mobile.",
+    tag: "Ads", color: "yellow",
+    tools: ["Figma"],
+    image: "images/klymax-ads-cover.jpg",
+    prototypes: {
+      desktop: "https://www.figma.com/proto/FvihRcaG5dsLWXbgNR5Gem/Portfolio?node-id=14-32172&viewport=-1579%2C5848%2C0.3&t=uRDPbnVWJHUsPWqG-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=14%3A32172&page-id=13%3A7718&show-proto-sidebar=1",
+      mobile:  "https://www.figma.com/proto/FvihRcaG5dsLWXbgNR5Gem/Portfolio?node-id=14-32366&viewport=-1579%2C5848%2C0.3&t=uRDPbnVWJHUsPWqG-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=14%3A32366&page-id=13%3A7718&show-proto-sidebar=1"
+    },
+    pdfUrl: ""
+  },
+  {
+    company: "Desa Potato Head",
+    title: "Event Landing Page — Feast",
+    desc: "Event landing page for Feast at Desa Potato Head.",
+    tag: "Landing Page", color: "blue",
+    tools: ["Figma"],
+    image: "images/event-feast-cover.jpg",
+    prototypes: {
+      desktop: "https://www.figma.com/proto/FvihRcaG5dsLWXbgNR5Gem/Portfolio?node-id=13-15383&viewport=-1579%2C5848%2C0.3&t=uRDPbnVWJHUsPWqG-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=13%3A15383&page-id=13%3A7718&show-proto-sidebar=1"
+    },
+    pdfUrl: ""
+  },
+  {
+    company: "Desa Potato Head",
+    title: "Event Landing Page — Wellbeing",
+    desc: "Event landing page for the Wellbeing programme at Desa Potato Head.",
+    tag: "Landing Page", color: "pink",
+    tools: ["Figma"],
+    image: "images/event-wellbeing-cover.jpg",
+    prototypes: {
+      desktop: "https://www.figma.com/proto/FvihRcaG5dsLWXbgNR5Gem/Portfolio?node-id=13-15515&viewport=-1579%2C5848%2C0.3&t=uRDPbnVWJHUsPWqG-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=13%3A15515&page-id=13%3A7718&show-proto-sidebar=1"
+    },
+    pdfUrl: ""
   },
   {
     company: "KLYMAX Discotheque",
@@ -645,14 +725,6 @@ const projects = [
     desc: "Recurring newsletter design from brief to scheduled send — layouts built in Figma and published via Revinate.",
     tag: "Newsletter", color: "blue",
     tools: ["Figma", "Revinate"],
-    image: "", pdfUrl: ""
-  },
-  {
-    company: "Desa Potato Head",
-    title: "Event Landing Pages",
-    desc: "Landing pages for brand events — designed and delivered fast-turnaround with brand-aligned visuals.",
-    tag: "Landing Page", color: "yellow",
-    tools: ["Figma", "Framer"],
     image: "", pdfUrl: ""
   },
   {
@@ -701,14 +773,6 @@ const projects = [
     desc: "Back-end content management via Strapi — kept website content accurate, current, and brand-consistent.",
     tag: "CMS", color: "yellow",
     tools: ["Strapi", "HTML/CSS"],
-    image: "", pdfUrl: ""
-  },
-  {
-    company: "Project 13",
-    title: "Coming Soon",
-    desc: "Placeholder — edit the projects array in the HTML file to add your real project details here.",
-    tag: "UI Design", color: "pink",
-    tools: ["Figma"],
     image: "", pdfUrl: ""
   },
 ];
@@ -779,7 +843,7 @@ function showPrototypes(p) {
   const kinds = [['desktop', 'Desktop'], ['mobile', 'Mobile']].filter(([k]) => p.prototypes[k]);
   modalBody.classList.add('shots');
   modalBody.innerHTML =
-    `<div class="shot-tabs">${kinds.map(([k, l], i) => `<button class="shot-tab${i ? '' : ' active'}" data-k="${k}">${l}</button>`).join('')}</div>` +
+    (kinds.length > 1 ? `<div class="shot-tabs">${kinds.map(([k, l], i) => `<button class="shot-tab${i ? '' : ' active'}" data-k="${k}">${l}</button>`).join('')}</div>` : '') +
     `<div class="shot-view"></div>`;
   const view = modalBody.querySelector('.shot-view');
   const render = k => {
