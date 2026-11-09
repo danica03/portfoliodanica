@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Danica Massie — UI/UX Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:         #FAF8F3;
+  --bg2:        #F3F0E8;
+  --bg3:        #EDE9DF;
+  --surface:    #FFFFFF;
+  --border:     rgba(0,0,0,0.08);
+  --border-md:  rgba(0,0,0,0.14);
+  --text:       #1A1A1A;
+  --text-muted: #6B6660;
+  --text-dim:   #AAA39A;
+  --pink:       #F384D4;
+  --pink-soft:  #FDE8F8;
+  --pink-mid:   #D660B8;
+  --blue:       #5AB5E8;
+  --blue-soft:  #E4F4FC;
+  --blue-mid:   #3A9FD6;
+  --yellow:     #EECD56;
+  --yellow-soft:#FDF7DC;
+  --yellow-mid: #C4A820;
+  --font-serif: 'DM Serif Display', serif;
+  --font-sans:  'Inter', sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--font-sans); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.1rem 2.5rem;
+  background: rgba(250,248,243,0.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { font-family: var(--font-serif); font-size: 1.2rem; color: var(--text); text-decoration: none; }
+.nav-logo span { color: var(--pink); }
+.nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+.nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.82rem; letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-cta { background: var(--text) !important; color: var(--bg) !important; padding: 0.45rem 1.1rem !important; border-radius: 100px !important; }
+
+/* ── LAYOUT ── */
+.container { max-width: 1120px; margin: 0 auto; padding: 0 2.5rem; }
+section { padding: 6rem 0; }
+
+/* ── HERO ── */
+#hero { min-height: 100vh; display: flex; align-items: center; padding-top: 5rem; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+.blob { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; }
+.blob-1 { width: 440px; height: 440px; background: var(--pink); top: -100px; right: -80px; opacity: 0.3; }
+.blob-2 { width: 320px; height: 320px; background: var(--blue); bottom: 60px; right: 220px; opacity: 0.2; }
+.blob-3 { width: 280px; height: 280px; background: var(--yellow); top: 55%; left: -80px; opacity: 0.25; }
+
+.hero-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 5rem; align-items: center; width: 100%; }
+.hero-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--pink-soft); border: 1px solid var(--pink); color: var(--pink-mid); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 14px; border-radius: 100px; margin-bottom: 1.5rem; }
+.hero-eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--pink); }
+.hero-name { font-family: var(--font-serif); font-size: clamp(2.8rem, 5.5vw, 5.2rem); line-height: 1.0; color: var(--text); margin-bottom: 1.5rem; }
+.hero-name em { font-style: italic; color: var(--pink); }
+.hero-desc { font-size: 0.97rem; color: var(--text-muted); line-height: 1.85; max-width: 480px; margin-bottom: 2.5rem; }
+.hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+.btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--text); color: var(--bg); text-decoration: none; padding: 0.75rem 1.6rem; font-size: 0.85rem; font-weight: 500; border-radius: 100px; transition: transform 0.18s, background 0.18s; }
+.btn-primary:hover { transform: translateY(-2px); background: #333; }
+.btn-primary svg { width: 14px; height: 14px; }
+.btn-ghost { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; border: 1px solid var(--border-md); padding: 0.75rem 1.6rem; border-radius: 100px; transition: border-color 0.18s, color 0.18s; }
+.btn-ghost:hover { border-color: var(--text); color: var(--text); }
+
+.hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.hero-stat { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; }
+.hero-stat:nth-child(1) { border-top: 3px solid var(--pink); }
+.hero-stat:nth-child(2) { border-top: 3px solid var(--blue); }
+.hero-stat:nth-child(3) { border-top: 3px solid var(--yellow); }
+.hero-stat:nth-child(4) { border-top: 3px solid var(--pink); }
+.hero-stat-num { font-family: var(--font-serif); font-size: 2.6rem; color: var(--text); line-height: 1; margin-bottom: 0.3rem; }
+.hero-stat-label { font-size: 0.75rem; color: var(--text-muted); }
+
+/* ── SECTION HEADER ── */
+.section-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; }
+.section-eyebrow.pink  { color: var(--pink-mid); }
+.section-eyebrow.blue  { color: var(--blue-mid); }
+.section-eyebrow.yellow{ color: var(--yellow-mid); }
+.section-eyebrow::before { content: ''; display: inline-block; width: 18px; height: 2px; background: currentColor; border-radius: 2px; }
+.section-title { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 3rem); line-height: 1.1; margin-bottom: 0.75rem; color: var(--text); }
+.section-desc { font-size: 0.95rem; color: var(--text-muted); max-width: 520px; line-height: 1.85; margin-bottom: 3rem; }
+
+/* ── EXPERIENCE ── */
+#experience { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.exp-list { display: flex; flex-direction: column; gap: 1.5rem; }
+.exp-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem 2rem 2rem 1.75rem;
+  display: grid;
+  grid-template-columns: 3px 1fr;
+  gap: 1.5rem;
+  transition: box-shadow 0.2s;
+}
+.exp-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.07); }
+.exp-stripe { border-radius: 4px; }
+.exp-stripe.pink   { background: var(--pink); }
+.exp-stripe.blue   { background: var(--blue); }
+.exp-stripe.yellow { background: var(--yellow); }
+.exp-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 0.4rem; flex-wrap: wrap; }
+.exp-role { font-family: var(--font-serif); font-size: 1.2rem; color: var(--text); }
+.exp-period { font-size: 0.75rem; color: var(--text-dim); font-weight: 500; letter-spacing: 0.04em; white-space: nowrap; border: 1px solid var(--border-md); padding: 3px 10px; border-radius: 100px; }
+.exp-company { font-size: 0.82rem; font-weight: 500; color: var(--text-muted); margin-bottom: 1rem; }
+.exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.exp-bullets li { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; padding-left: 1.1rem; position: relative; }
+.exp-bullets li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 5px; height: 5px; border-radius: 50%; background: var(--pink); flex-shrink: 0; }
+.exp-card.blue-card .exp-bullets li::before { background: var(--blue); }
+.exp-card.yellow-card .exp-bullets li::before { background: var(--yellow); }
+
+/* ── PORTFOLIO ── */
+#portfolio { border-bottom: 1px solid var(--border); }
+.portfolio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(278px, 1fr)); gap: 1.25rem; }
+
+.project-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; cursor: pointer; transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s; display: flex; flex-direction: column; }
+.project-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,0.09); border-color: var(--border-md); }
+.card-thumb { width: 100%; aspect-ratio: 16/10; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.card-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform 0.4s; }
+.project-card:hover .card-thumb img { transform: scale(1.04); }
+.card-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; }
+.card-placeholder svg { width: 28px; height: 28px; opacity: 0.55; }
+.card-placeholder span { font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.6; }
+.card-tag { position: absolute; top: 10px; left: 10px; font-size: 0.65rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 9px; border-radius: 100px; }
+.tag-pink   { background: var(--pink-soft);   color: var(--pink-mid);   border: 1px solid rgba(243,132,212,0.4); }
+.tag-blue   { background: var(--blue-soft);   color: var(--blue-mid);   border: 1px solid rgba(90,181,232,0.4); }
+.tag-yellow { background: var(--yellow-soft); color: var(--yellow-mid); border: 1px solid rgba(238,205,86,0.5); }
+.card-pdf-badge { position: absolute; top: 10px; right: 10px; background: var(--text); color: var(--bg); font-size: 0.62rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 9px; border-radius: 100px; display: flex; align-items: center; gap: 4px; }
+.card-pdf-badge svg { width: 9px; height: 9px; }
+.card-body { padding: 1.1rem 1.25rem 1.35rem; flex: 1; display: flex; flex-direction: column; }
+.card-company { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.3rem; }
+.card-title { font-family: var(--font-serif); font-size: 1.15rem; color: var(--text); margin-bottom: 0.5rem; line-height: 1.25; }
+.card-desc { font-size: 0.83rem; color: var(--text-muted); line-height: 1.7; flex: 1; }
+.card-footer { margin-top: 1rem; display: flex; align-items: center; justify-content: space-between; padding-top: 0.85rem; border-top: 1px solid var(--border); }
+.card-tools { display: flex; gap: 5px; flex-wrap: wrap; }
+.tool-pill { font-size: 0.65rem; color: var(--text-muted); border: 1px solid var(--border-md); padding: 2px 8px; border-radius: 100px; background: var(--bg2); }
+.card-arrow { display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border: 1px solid var(--border-md); border-radius: 50%; color: var(--text-muted); transition: background 0.2s, border-color 0.2s, color 0.2s; flex-shrink: 0; }
+.project-card:hover .card-arrow { background: var(--text); border-color: var(--text); color: var(--bg); }
+.card-arrow svg { width: 13px; height: 13px; }
+
+/* ── SKILLS ── */
+#skills { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.skills-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 5rem; align-items: start; }
+.skill-groups { display: flex; flex-direction: column; gap: 2rem; }
+.skill-group-label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.75rem; }
+.skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.skill-tag { padding: 6px 16px; border: 1px solid var(--border-md); background: var(--surface); font-size: 0.82rem; color: var(--text-muted); border-radius: 100px; transition: all 0.18s; }
+.skill-tag:hover { color: var(--text); border-color: var(--text); }
+.skill-tag.s-pink   { border-color: var(--pink);   color: var(--pink-mid);   background: var(--pink-soft); }
+.skill-tag.s-blue   { border-color: var(--blue);   color: var(--blue-mid);   background: var(--blue-soft); }
+.skill-tag.s-yellow { border-color: var(--yellow); color: var(--yellow-mid); background: var(--yellow-soft); }
+
+/* ── CONTACT ── */
+#contact {}
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+.contact-links { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 2rem; }
+.contact-link { display: flex; align-items: center; gap: 1rem; color: var(--text-muted); text-decoration: none; font-size: 0.88rem; padding: 0.9rem 1.25rem; border: 1px solid var(--border); background: var(--surface); border-radius: 12px; transition: border-color 0.2s, box-shadow 0.2s, color 0.2s; }
+.contact-link:hover { border-color: var(--border-md); box-shadow: 0 4px 16px rgba(0,0,0,0.06); color: var(--text); }
+.contact-link svg { width: 18px; height: 18px; flex-shrink: 0; }
+.contact-link.cl-pink svg { color: var(--pink); }
+.contact-link.cl-blue svg { color: var(--blue); }
+.contact-link.cl-yellow svg { color: var(--yellow-mid); }
+.contact-details { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+.contact-detail { padding: 1.25rem; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; }
+.contact-detail.cd-pink   { border-left: 3px solid var(--pink); }
+.contact-detail.cd-blue   { border-left: 3px solid var(--blue); }
+.contact-detail.cd-yellow { border-left: 3px solid var(--yellow); }
+.contact-detail-label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.25rem; }
+.contact-detail-val { font-family: var(--font-serif); font-size: 1.1rem; color: var(--text); }
+
+/* ── FOOTER ── */
+footer { border-top: 1px solid var(--border); padding: 1.75rem 2.5rem; display: flex; align-items: center; justify-content: space-between; }
+.footer-copy { font-size: 0.78rem; color: var(--text-dim); }
+.footer-dots { display: flex; gap: 6px; }
+.footer-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+/* ── MODAL ── */
+.modal-backdrop { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.5); backdrop-filter: blur(6px); align-items: center; justify-content: center; }
+.modal-backdrop.open { display: flex; }
+.modal { background: var(--surface); border: 1px solid var(--border-md); border-radius: 20px; width: min(92vw, 900px); max-height: 90vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 24px 80px rgba(0,0,0,0.18); }
+.modal-header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.modal-title { font-family: var(--font-serif); font-size: 1.1rem; color: var(--text); }
+.modal-actions { display: flex; align-items: center; gap: 0.75rem; }
+.modal-btn { display: inline-flex; align-items: center; gap: 6px; padding: 0.45rem 1.1rem; font-size: 0.8rem; font-weight: 500; border-radius: 100px; cursor: pointer; text-decoration: none; transition: all 0.15s; }
+.modal-btn.primary { background: var(--text); color: var(--bg); border: none; }
+.modal-btn.primary:hover { background: #333; }
+.modal-btn.ghost { background: transparent; color: var(--text-muted); border: 1px solid var(--border-md); }
+.modal-btn.ghost:hover { border-color: var(--text); color: var(--text); }
+.modal-btn svg { width: 13px; height: 13px; }
+.modal-body { flex: 1; overflow: hidden; background: var(--bg2); min-height: 500px; display: flex; align-items: center; justify-content: center; }
+.modal-body iframe { width: 100%; height: 100%; min-height: 500px; border: none; }
+.modal-no-url { display: flex; flex-direction: column; align-items: center; gap: 1rem; color: var(--text-dim); text-align: center; padding: 2rem; }
+.modal-no-url svg { width: 40px; height: 40px; opacity: 0.3; }
+.modal-no-url p { font-size: 0.85rem; }
+
+/* screenshot viewer (Desktop / Mobile tabs) */
+.modal-body.shots { flex-direction: column; align-items: stretch; justify-content: flex-start; min-height: 0; }
+.shot-tabs { display: flex; gap: 8px; padding: 0.75rem 1.5rem; border-bottom: 1px solid var(--border); background: var(--surface); flex-shrink: 0; }
+.shot-tab { font: inherit; font-size: 0.78rem; font-weight: 500; padding: 0.35rem 1rem; border-radius: 100px; border: 1px solid var(--border-md); background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.15s; }
+.shot-tab:hover { border-color: var(--text); color: var(--text); }
+.shot-tab.active { background: var(--text); border-color: var(--text); color: var(--bg); }
+.shot-view { flex: 1; min-height: 0; overflow-y: auto; display: flex; justify-content: center; align-items: flex-start; background: var(--bg2); }
+.shot-img { display: block; height: auto; }
+.shot-img.desktop { width: 100%; }
+.shot-img.mobile { width: 100%; max-width: 360px; margin: 1.5rem auto; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+.shot-view iframe { width: 100%; height: 100%; min-height: 500px; border: none; }
+
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.25rem; }
+  .nav-links { display: none; }
+  .container { padding: 0 1.25rem; }
+  .hero-inner, .skills-layout, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .hero-stats { display: none; }
+  footer { flex-direction: column; gap: 0.75rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Danica<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#portfolio">Work</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="container">
+    <div class="hero-inner" id="about">
+      <div>
+        <div class="hero-eyebrow">
+          <span class="hero-eyebrow-dot"></span>
+          UI/UX Designer · Bali, Indonesia
+        </div>
+        <h1 class="hero-name">Hi, I'm<br><em>Danica.</em></h1>
+        <p class="hero-desc">
+          UI/UX Designer with 4+ years of experience designing user-centric web and mobile applications across hospitality, healthcare, and technology. Skilled in translating user research and business goals into intuitive, visually compelling interfaces — from wireframes to front-end implementation.
+        </p>
+        <div class="hero-actions">
+          <a href="#portfolio" class="btn-primary">
+            View my work
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+          <a href="#contact" class="btn-ghost">Get in touch</a>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">4+</div>
+          <div class="hero-stat-label">Years experience</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">3</div>
+          <div class="hero-stat-label">Industries</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">5</div>
+          <div class="hero-stat-label">Companies</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">16+</div>
+          <div class="hero-stat-label">Projects delivered</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <p class="section-eyebrow blue">Career</p>
+    <h2 class="section-title">Experience</h2>
+    <p class="section-desc">End-to-end design across hospitality, healthcare, and technology — from research to live product.</p>
+
+    <div class="exp-list">
+
+      <!-- Potato Head -->
+      <div class="exp-card">
+        <div class="exp-stripe pink"></div>
+        <div>
+          <div class="exp-header">
+            <span class="exp-role">UI/UX Designer</span>
+            <span class="exp-period">March 2024 – Present</span>
+          </div>
+          <p class="exp-company">Desa Potato Head Bali</p>
+          <ul class="exp-bullets">
+            <li>Designed and launched the full responsive website, beach club booking system, and online shop.</li>
+            <li>Produced and distributed brand newsletters end-to-end; built event landing pages and ticketing.</li>
+            <li>Managed website content via Strapi CMS and collaborated with dev, marketing, and ops teams.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- RS Advent -->
+      <div class="exp-card blue-card">
+        <div class="exp-stripe blue"></div>
+        <div>
+          <div class="exp-header">
+            <span class="exp-role">UI/UX Designer</span>
+            <span class="exp-period">February 2023 – February 2024</span>
+          </div>
+          <p class="exp-company">Rumah Sakit Advent Manado</p>
+          <ul class="exp-bullets">
+            <li>Ran user research on clinical and administrative needs and turned it into practical UI workflows.</li>
+            <li>Built interactive prototypes, validated through regular user testing and developer collaboration.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Ever -->
+      <div class="exp-card yellow-card">
+        <div class="exp-stripe yellow"></div>
+        <div>
+          <div class="exp-header">
+            <span class="exp-role">UI Designer (Freelance)</span>
+            <span class="exp-period">October 2022 – February 2023</span>
+          </div>
+          <p class="exp-company">Ever</p>
+          <ul class="exp-bullets">
+            <li>Delivered lo-fi and hi-fi prototypes and wireframes for client websites and mobile apps.</li>
+            <li>Established style guides to keep design consistent across products.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Nadi Health -->
+      <div class="exp-card">
+        <div class="exp-stripe pink"></div>
+        <div>
+          <div class="exp-header">
+            <span class="exp-role">UI Designer</span>
+            <span class="exp-period">April 2022 – September 2022</span>
+          </div>
+          <p class="exp-company">Nadi Health</p>
+          <ul class="exp-bullets">
+            <li>Designed the My Pharma refund flow, improving user flow efficiency by 35%.</li>
+            <li>Competitive analysis contributed to a 65% improvement in product quality; handled QA testing.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Klabat Tekno -->
+      <div class="exp-card blue-card">
+        <div class="exp-stripe blue"></div>
+        <div>
+          <div class="exp-header">
+            <span class="exp-role">UI/UX Designer & Front-End Developer Intern</span>
+            <span class="exp-period">January 2021 – January 2022</span>
+          </div>
+          <p class="exp-company">Klabat Tekno Perkasa</p>
+          <ul class="exp-bullets">
+            <li>Designed Figma prototypes and built reusable React Native components to reduce project costs.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="container">
+    <p class="section-eyebrow pink">Selected work</p>
+    <h2 class="section-title">Projects</h2>
+    <p class="section-desc">Each project shaped around the brief — with attention to clarity, usability, and visual craft.</p>
+    <div class="portfolio-grid" id="portfolioGrid"></div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="skills-layout">
+      <div>
+        <p class="section-eyebrow yellow">Capabilities</p>
+        <h2 class="section-title">Skills &amp; tools</h2>
+        <p class="section-desc">Bridging design and development — fluent in both languages and precise enough to handover with confidence.</p>
+      </div>
+      <div class="skill-groups">
+        <div>
+          <p class="skill-group-label">Design tools</p>
+          <div class="skill-tags">
+            <span class="skill-tag s-pink">Figma</span>
+            <span class="skill-tag s-pink">Adobe Photoshop</span>
+            <span class="skill-tag s-pink">Framer</span>
+          </div>
+        </div>
+        <div>
+          <p class="skill-group-label">Front-end development</p>
+          <div class="skill-tags">
+            <span class="skill-tag s-blue">HTML / CSS</span>
+            <span class="skill-tag s-blue">JavaScript</span>
+            <span class="skill-tag s-blue">React Native</span>
+          </div>
+        </div>
+        <div>
+          <p class="skill-group-label">CMS & platforms</p>
+          <div class="skill-tags">
+            <span class="skill-tag s-yellow">Strapi</span>
+            <span class="skill-tag s-yellow">WordPress</span>
+            <span class="skill-tag s-yellow">Revinate</span>
+          </div>
+        </div>
+        <div>
+          <p class="skill-group-label">Project management</p>
+          <div class="skill-tags">
+            <span class="skill-tag s-blue">Jira</span>
+            <span class="skill-tag s-blue">ClickUp</span>
+            <span class="skill-tag s-blue">Notion</span>
+            <span class="skill-tag s-blue">Microsoft Office</span>
+          </div>
+        </div>
+        <div>
+          <p class="skill-group-label">Disciplines</p>
+          <div class="skill-tags">
+            <span class="skill-tag s-pink">UI Design</span>
+            <span class="skill-tag s-pink">UX Design</span>
+            <span class="skill-tag s-pink">Wireframing</span>
+            <span class="skill-tag s-blue">Prototyping</span>
+            <span class="skill-tag s-blue">Responsive Design</span>
+            <span class="skill-tag s-yellow">User Research</span>
+            <span class="skill-tag s-yellow">Competitive Analysis</span>
+            <span class="skill-tag s-yellow">Usability Testing</span>
+            <span class="skill-tag s-yellow">QA Testing</span>
+          </div>
+        </div>
+        <div>
+          <p class="skill-group-label">Education</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Bachelor of Computer Science — Information Systems</span>
+            <span class="skill-tag">Klabat University, 2022</span>
+          </div>
+        </div>
+        <div>
+          <p class="skill-group-label">Languages</p>
+          <div class="skill-tags">
+            <span class="skill-tag s-pink">Bahasa Indonesia (Native)</span>
+            <span class="skill-tag s-blue">English (Intermediate)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <p class="section-eyebrow pink">Get in touch</p>
+    <h2 class="section-title">Let's work together.</h2>
+    <div class="contact-grid">
+      <div>
+        <div class="contact-links">
+          <a href="mailto:danicagodelvakm@gmail.com" class="contact-link cl-pink">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+            danicagodelvakm@gmail.com
+          </a>
+          <a href="https://linkedin.com/in/danica-massie-150619217" target="_blank" class="contact-link cl-blue">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            linkedin.com/in/danica-massie-150619217
+          </a>
+          <a href="https://dribbble.com/danica_massie" target="_blank" class="contact-link cl-pink">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>
+            dribbble.com/danica_massie
+          </a>
+          <a href="tel:+6285397514445" class="contact-link cl-yellow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6.29 6.29l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            +62 853 9751 4445
+          </a>
+        </div>
+      </div>
+      <div>
+        <div class="contact-details">
+          <div class="contact-detail cd-pink">
+            <div class="contact-detail-label">Currently at</div>
+            <div class="contact-detail-val">Desa Potato Head Bali</div>
+          </div>
+          <div class="contact-detail cd-blue">
+            <div class="contact-detail-label">Based in</div>
+            <div class="contact-detail-val">Bali, Indonesia</div>
+          </div>
+          <div class="contact-detail cd-yellow">
+            <div class="contact-detail-label">Available for</div>
+            <div class="contact-detail-val">Freelance & Collaborations</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-copy">© 2026 Danica Godelva Khairunisa Massie. All rights reserved.</span>
+  <div class="footer-dots">
+    <div class="footer-dot" style="background:var(--pink)"></div>
+    <div class="footer-dot" style="background:var(--blue)"></div>
+    <div class="footer-dot" style="background:var(--yellow)"></div>
+  </div>
+</footer>
+
+<!-- PDF MODAL -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modalTitle">Project</span>
+      <div class="modal-actions">
+        <a href="#" id="modalOpenLink" target="_blank" class="modal-btn primary">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1V9"/><path d="M10 2h4v4M14 2 8 8"/></svg>
+          Open PDF
+        </a>
+        <button class="modal-btn ghost" id="modalClose">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l10 10M13 3 3 13"/></svg>
+          Close
+        </button>
+      </div>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+/*
+ * ✏️ EDIT YOUR PROJECTS HERE
+ * ─────────────────────────────────────────────────
+ * company  → nama perusahaan
+ * title    → nama project
+ * desc     → deskripsi singkat
+ * tag      → kategori label
+ * color    → "pink" / "blue" / "yellow"
+ * tools    → array of strings
+ * image    → path file gambar, contoh: "images/web.jpg" (kosongkan jika belum ada)
+ * figmaUrl → (opsional) link Figma file/frame, tempel link apa adanya dari Figma
+ *            Kalau diisi, modal menampilkan embed Figma (menggantikan PDF)
+ * pdfUrl   → Google Drive preview link
+ *            Cara: buka file → Share → Copy link → ganti "/view" jadi "/preview"
+ *            Contoh: "https://drive.google.com/file/d/xxxxx/preview"
+ */
+const projects = [
+  {
+    company: "Desa Potato Head Bali",
+    title: "Hotel Website Multi Language",
+    desc: "Multi-language website for Potato Head Suites and Hotel — responsive desktop and mobile designs, shown in its Korean version.",
+    tag: "Website", color: "pink",
+    tools: ["Figma", "Framer", "Strapi"],
+    // Cover + full-page screenshots (export dari Figma, lihat tutorial). Kalau file belum ada,
+    // card otomatis memakai placeholder dan modal menampilkan embed Figma sebagai cadangan.
+    image: "images/hotel-website-cover.jpg",
+    screens: {
+      desktop: "images/hotel-website-desktop.jpg",
+      mobile:  "images/hotel-website-mobile.jpg"
+    },
+    figmaDesktop: "https://www.figma.com/design/jvJ4BntYCixTh9fGGVgeJF/Multi-Language-Website?node-id=721-6825",
+    figmaMobile:  "https://www.figma.com/design/jvJ4BntYCixTh9fGGVgeJF/Multi-Language-Website?node-id=649-1047",
+    figmaUrl: "https://www.figma.com/design/jvJ4BntYCixTh9fGGVgeJF/Multi-Language-Website?node-id=2457-1121&t=3UHY89FZadlfCcBq-1",
+    pdfUrl: ""
+  },
+  {
+    company: "Potato Head Beach Club",
+    title: "Booking System",
+    desc: "Responsive reservation flow for the beach club — designed for mobile and desktop, optimised for conversion.",
+    tag: "Booking System", color: "blue",
+    tools: ["Figma", "HTML/CSS"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Desa Potato Head",
+    title: "Online Shop",
+    desc: "Designed the brand's online shop — showcasing and selling merchandise with a cohesive visual identity.",
+    tag: "E-commerce", color: "yellow",
+    tools: ["Figma", "Framer"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "KLYMAX Discotheque",
+    title: "Event Ticketing & Website",
+    desc: "End-to-end event ticketing — listed on two platforms, integrated into the Klymax website with full QA.",
+    tag: "Ticketing", color: "pink",
+    tools: ["Figma", "Framer"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Desa Potato Head",
+    title: "Email Newsletter System",
+    desc: "Recurring newsletter design from brief to scheduled send — layouts built in Figma and published via Revinate.",
+    tag: "Newsletter", color: "blue",
+    tools: ["Figma", "Revinate"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Desa Potato Head",
+    title: "Event Landing Pages",
+    desc: "Landing pages for brand events — designed and delivered fast-turnaround with brand-aligned visuals.",
+    tag: "Landing Page", color: "yellow",
+    tools: ["Figma", "Framer"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Rumah Sakit Advent Manado",
+    title: "Hospital Internal System",
+    desc: "User research-driven design for clinical and administrative workflows — validated through iterative user testing.",
+    tag: "Healthcare", color: "blue",
+    tools: ["Figma"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Nadi Health",
+    title: "My Pharma Module",
+    desc: "High-fidelity designs for the refund flow — contributed to a 35% improvement in user flow efficiency.",
+    tag: "Health Tech", color: "pink",
+    tools: ["Figma"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Nadi Health",
+    title: "Cross-Platform UI Optimization",
+    desc: "Optimized screen layouts across web and mobile for cross-browser and multi-device compatibility.",
+    tag: "Mobile & Web", color: "yellow",
+    tools: ["Figma"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Ever (Freelance)",
+    title: "Client Websites & Mobile Apps",
+    desc: "Lo-fi to hi-fi prototypes for client products — wireframes, style guides, and engineer-ready handovers.",
+    tag: "Freelance", color: "pink",
+    tools: ["Figma"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Klabat Tekno Perkasa",
+    title: "Web & Mobile Prototypes",
+    desc: "Designed and coded UI components in React Native — reusable code that reduced project costs.",
+    tag: "Mobile", color: "blue",
+    tools: ["Figma", "React Native"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Desa Potato Head",
+    title: "Strapi CMS Management",
+    desc: "Back-end content management via Strapi — kept website content accurate, current, and brand-consistent.",
+    tag: "CMS", color: "yellow",
+    tools: ["Strapi", "HTML/CSS"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Project 13",
+    title: "Coming Soon",
+    desc: "Placeholder — edit the projects array in the HTML file to add your real project details here.",
+    tag: "UI Design", color: "pink",
+    tools: ["Figma"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Project 14",
+    title: "Coming Soon",
+    desc: "Placeholder — edit the projects array in the HTML file to add your real project details here.",
+    tag: "Website", color: "blue",
+    tools: ["Figma"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Project 15",
+    title: "Coming Soon",
+    desc: "Placeholder — edit the projects array in the HTML file to add your real project details here.",
+    tag: "Mobile", color: "yellow",
+    tools: ["Figma"],
+    image: "", pdfUrl: ""
+  },
+  {
+    company: "Project 16",
+    title: "Coming Soon",
+    desc: "Placeholder — edit the projects array in the HTML file to add your real project details here.",
+    tag: "Branding", color: "pink",
+    tools: ["Figma"],
+    image: "", pdfUrl: ""
+  },
+];
+
+const thumbBg   = { pink: '#FDE8F8', blue: '#E4F4FC', yellow: '#FDF7DC' };
+const thumbIcon = { pink: '#F384D4', blue: '#5AB5E8', yellow: '#EECD56' };
+
+const grid = document.getElementById('portfolioGrid');
+projects.forEach(p => {
+  const hasFigma = (p.figmaUrl && p.figmaUrl.trim() !== '') || !!p.screens;
+  const hasPdf = hasFigma || (p.pdfUrl && p.pdfUrl.trim() !== '');
+  const badgeLabel = p.screens ? 'Design' : hasFigma ? 'Figma' : 'PDF';
+  const hasImg = p.image && p.image.trim() !== '';
+  const col = p.color || 'pink';
+
+  const card = document.createElement('div');
+  card.className = 'project-card';
+  card.setAttribute('role', 'button');
+  card.setAttribute('tabindex', '0');
+  card.setAttribute('aria-label', 'View ' + p.title);
+
+  card.innerHTML = `
+    <div class="card-thumb" style="background:${thumbBg[col]}">
+      <div class="card-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="${thumbIcon[col]}" stroke-width="1.3">
+          <rect x="3" y="3" width="18" height="14" rx="2"/>
+          <path d="M3 17l4-4 3 3 4-5 4 3"/>
+        </svg>
+        <span style="color:${thumbIcon[col]}">Preview coming soon</span>
+      </div>
+      ${hasImg ? `<img src="${p.image}" alt="${p.title}" loading="lazy" onerror="this.remove()"/>` : ''}
+      <span class="card-tag tag-${col}">${p.tag}</span>
+      ${hasPdf ? `<span class="card-pdf-badge"><svg viewBox="0 0 12 12" fill="currentColor"><path d="M2 0h6l3 3v9H2V0zm6 0v3h3"/></svg>${badgeLabel}</span>` : ''}
+    </div>
+    <div class="card-body">
+      <p class="card-company">${p.company}</p>
+      <h3 class="card-title">${p.title}</h3>
+      <p class="card-desc">${p.desc}</p>
+      <div class="card-footer">
+        <div class="card-tools">${p.tools.map(t => `<span class="tool-pill">${t}</span>`).join('')}</div>
+        <div class="card-arrow">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </div>
+      </div>
+    </div>`;
+
+  card.addEventListener('click', () => openModal(p));
+  card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openModal(p); });
+  grid.appendChild(card);
+});
+
+const backdrop = document.getElementById('modalBackdrop');
+const modalTitle = document.getElementById('modalTitle');
+const modalBody = document.getElementById('modalBody');
+const modalOpenLink = document.getElementById('modalOpenLink');
+const modalClose = document.getElementById('modalClose');
+
+function figmaEmbed(url) {
+  const u = new URL(url);
+  const node = u.searchParams.get('node-id');
+  return 'https://embed.figma.com' + u.pathname + '?' + (node ? 'node-id=' + node + '&' : '') + 'embed-host=share';
+}
+
+function showScreens(p) {
+  const kinds = [['desktop', 'Desktop'], ['mobile', 'Mobile']].filter(([k]) => p.screens[k]);
+  modalBody.classList.add('shots');
+  modalBody.innerHTML =
+    `<div class="shot-tabs">${kinds.map(([k, l], i) => `<button class="shot-tab${i ? '' : ' active'}" data-k="${k}">${l}</button>`).join('')}</div>` +
+    `<div class="shot-view"></div>`;
+  const view = modalBody.querySelector('.shot-view');
+  const render = k => {
+    view.scrollTop = 0;
+    view.innerHTML = `<img class="shot-img ${k}" src="${p.screens[k]}" alt="${p.title} — ${k}">`;
+    view.firstChild.onerror = () => {
+      const f = k === 'mobile' ? p.figmaMobile : p.figmaDesktop;
+      view.innerHTML = f ? `<iframe src="${figmaEmbed(f)}" title="${p.title} — ${k}" allowfullscreen></iframe>`
+                         : `<p style="padding:2rem;font-size:0.85rem;color:var(--text-dim)">Gambar belum tersedia.</p>`;
+    };
+  };
+  modalBody.querySelectorAll('.shot-tab').forEach(btn => btn.addEventListener('click', () => {
+    modalBody.querySelectorAll('.shot-tab').forEach(b => b.classList.toggle('active', b === btn));
+    render(btn.dataset.k);
+  }));
+  render(kinds[0][0]);
+}
+
+function openModal(p) {
+  modalTitle.textContent = p.title;
+  modalBody.classList.remove('shots');
+  const hasFigma = p.figmaUrl && p.figmaUrl.trim() !== '';
+  const hasPdf = p.pdfUrl && p.pdfUrl.trim() !== '';
+  if (p.screens && (p.screens.desktop || p.screens.mobile)) {
+    if (hasFigma) {
+      modalOpenLink.href = p.figmaUrl;
+      modalOpenLink.lastChild.textContent = ' Open in Figma';
+      modalOpenLink.style.display = 'inline-flex';
+    } else {
+      modalOpenLink.style.display = 'none';
+    }
+    showScreens(p);
+  } else if (hasFigma) {
+    const embed = figmaEmbed(p.figmaUrl);
+    modalOpenLink.href = p.figmaUrl;
+    modalOpenLink.lastChild.textContent = ' Open in Figma';
+    modalOpenLink.style.display = 'inline-flex';
+    modalBody.innerHTML = `<iframe src="${embed}" title="${p.title}" allowfullscreen></iframe>`;
+  } else if (hasPdf) {
+    modalOpenLink.href = p.pdfUrl;
+    modalOpenLink.lastChild.textContent = ' Open PDF';
+    modalOpenLink.style.display = 'inline-flex';
+    modalBody.innerHTML = `<iframe src="${p.pdfUrl}" title="${p.title}"></iframe>`;
+  } else {
+    modalOpenLink.style.display = 'none';
+    modalBody.innerHTML = `
+      <div class="modal-no-url">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <p>PDF belum tersedia untuk project ini.</p>
+        <p style="font-size:0.78rem;">Tambahkan <code>pdfUrl</code> di array <code>projects</code> pada file HTML.</p>
+      </div>`;
+  }
+  backdrop.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  backdrop.classList.remove('open');
+  modalBody.classList.remove('shots');
+  modalBody.innerHTML = '';
+  document.body.style.overflow = '';
+}
+modalClose.addEventListener('click', closeModal);
+backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>
