@@ -204,17 +204,15 @@ footer { border-top: 1px solid var(--border); padding: 1.75rem 2.5rem; display: 
 .modal-no-url svg { width: 40px; height: 40px; opacity: 0.3; }
 .modal-no-url p { font-size: 0.85rem; }
 
-/* screenshot viewer (Desktop / Mobile tabs) */
-.modal-body.shots { flex-direction: column; align-items: stretch; justify-content: flex-start; min-height: 0; }
+/* prototype viewer (Desktop / Mobile tabs) */
+.modal-body.shots { flex-direction: column; align-items: stretch; justify-content: flex-start; min-height: 0; height: 78vh; }
 .shot-tabs { display: flex; gap: 8px; padding: 0.75rem 1.5rem; border-bottom: 1px solid var(--border); background: var(--surface); flex-shrink: 0; }
 .shot-tab { font: inherit; font-size: 0.78rem; font-weight: 500; padding: 0.35rem 1rem; border-radius: 100px; border: 1px solid var(--border-md); background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.15s; }
 .shot-tab:hover { border-color: var(--text); color: var(--text); }
 .shot-tab.active { background: var(--text); border-color: var(--text); color: var(--bg); }
-.shot-view { flex: 1; min-height: 0; overflow-y: auto; display: flex; justify-content: center; align-items: flex-start; background: var(--bg2); }
-.shot-img { display: block; height: auto; }
-.shot-img.desktop { width: 100%; }
-.shot-img.mobile { width: 100%; max-width: 360px; margin: 1.5rem auto; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
-.shot-view iframe { width: 100%; height: 100%; min-height: 500px; border: none; }
+.shot-view { flex: 1; min-height: 0; display: flex; justify-content: center; background: var(--bg2); }
+.shot-view iframe { width: 100%; height: 100%; border: none; }
+.shot-view.mobile iframe { max-width: 420px; }
 
 @media (max-width: 768px) {
   nav { padding: 1rem 1.25rem; }
@@ -565,16 +563,12 @@ const projects = [
     desc: "Multi-language website for Potato Head Suites and Hotel — responsive desktop and mobile designs, shown in its Korean version.",
     tag: "Website", color: "pink",
     tools: ["Figma", "Framer", "Strapi"],
-    // Cover + full-page screenshots (export dari Figma, lihat tutorial). Kalau file belum ada,
-    // card otomatis memakai placeholder dan modal menampilkan embed Figma sebagai cadangan.
     image: "images/hotel-website-cover.jpg",
-    screens: {
-      desktop: "images/hotel-website-desktop.jpg",
-      mobile:  "images/hotel-website-mobile.jpg"
+    // Prototype Figma: tempel link "Share → Copy link to prototype" apa adanya.
+    prototypes: {
+      desktop: "https://www.figma.com/proto/FvihRcaG5dsLWXbgNR5Gem/Portfolio?node-id=17-25897&viewport=-1579%2C5848%2C0.3&t=uRDPbnVWJHUsPWqG-1&scaling=scale-down-width&content-scaling=fixed&starting-point-node-id=17%3A25897&show-proto-sidebar=1&page-id=13%3A7718",
+      mobile:  "https://www.figma.com/proto/FvihRcaG5dsLWXbgNR5Gem/Portfolio?node-id=17-26274&viewport=-1579%2C5848%2C0.3&t=uRDPbnVWJHUsPWqG-1&scaling=scale-down-width&content-scaling=fixed&starting-point-node-id=17%3A26274&show-proto-sidebar=1&page-id=13%3A7718"
     },
-    figmaDesktop: "https://www.figma.com/design/jvJ4BntYCixTh9fGGVgeJF/Multi-Language-Website?node-id=721-6825",
-    figmaMobile:  "https://www.figma.com/design/jvJ4BntYCixTh9fGGVgeJF/Multi-Language-Website?node-id=649-1047",
-    figmaUrl: "https://www.figma.com/design/FvihRcaG5dsLWXbgNR5Gem/Portfolio?node-id=17-27703&t=sNPD2urofmIYncQR-1",
     pdfUrl: ""
   },
   {
@@ -704,9 +698,9 @@ const thumbIcon = { pink: '#F384D4', blue: '#5AB5E8', yellow: '#EECD56' };
 
 const grid = document.getElementById('portfolioGrid');
 projects.forEach(p => {
-  const hasFigma = (p.figmaUrl && p.figmaUrl.trim() !== '') || !!p.screens;
+  const hasFigma = (p.figmaUrl && p.figmaUrl.trim() !== '') || !!p.prototypes;
   const hasPdf = hasFigma || (p.pdfUrl && p.pdfUrl.trim() !== '');
-  const badgeLabel = p.screens ? 'Design' : hasFigma ? 'Figma' : 'PDF';
+  const badgeLabel = p.prototypes ? 'Prototype' : hasFigma ? 'Figma' : 'PDF';
   const hasImg = p.image && p.image.trim() !== '';
   const col = p.color || 'pink';
 
@@ -754,30 +748,23 @@ const modalClose = document.getElementById('modalClose');
 
 function figmaEmbed(url) {
   const u = new URL(url);
-  const node = u.searchParams.get('node-id');
-  return 'https://embed.figma.com' + u.pathname + '?' + (node ? 'node-id=' + node + '&' : '') + 'embed-host=share';
+  u.host = 'embed.figma.com';
+  ['t', 'viewport', 'show-proto-sidebar'].forEach(k => u.searchParams.delete(k));
+  u.searchParams.set('embed-host', 'share');
+  u.searchParams.set('hide-ui', '1');
+  return u.toString();
 }
 
-function showScreens(p) {
-  const kinds = [['desktop', 'Desktop'], ['mobile', 'Mobile'], ['overview', 'Overview']]
-    .filter(([k]) => k === 'overview' ? p.figmaUrl : p.screens[k]);
+function showPrototypes(p) {
+  const kinds = [['desktop', 'Desktop'], ['mobile', 'Mobile']].filter(([k]) => p.prototypes[k]);
   modalBody.classList.add('shots');
   modalBody.innerHTML =
     `<div class="shot-tabs">${kinds.map(([k, l], i) => `<button class="shot-tab${i ? '' : ' active'}" data-k="${k}">${l}</button>`).join('')}</div>` +
     `<div class="shot-view"></div>`;
   const view = modalBody.querySelector('.shot-view');
   const render = k => {
-    view.scrollTop = 0;
-    if (k === 'overview') {
-      view.innerHTML = `<iframe src="${figmaEmbed(p.figmaUrl)}" title="${p.title} — overview" allowfullscreen></iframe>`;
-      return;
-    }
-    view.innerHTML = `<img class="shot-img ${k}" src="${p.screens[k]}" alt="${p.title} — ${k}">`;
-    view.firstChild.onerror = () => {
-      const f = k === 'mobile' ? p.figmaMobile : p.figmaDesktop;
-      view.innerHTML = f ? `<iframe src="${figmaEmbed(f)}" title="${p.title} — ${k}" allowfullscreen></iframe>`
-                         : `<p style="padding:2rem;font-size:0.85rem;color:var(--text-dim)">Gambar belum tersedia.</p>`;
-    };
+    view.className = 'shot-view ' + k;
+    view.innerHTML = `<iframe src="${figmaEmbed(p.prototypes[k])}" title="${p.title} — ${k} prototype" allowfullscreen></iframe>`;
   };
   modalBody.querySelectorAll('.shot-tab').forEach(btn => btn.addEventListener('click', () => {
     modalBody.querySelectorAll('.shot-tab').forEach(b => b.classList.toggle('active', b === btn));
@@ -791,21 +778,12 @@ function openModal(p) {
   modalBody.classList.remove('shots');
   const hasFigma = p.figmaUrl && p.figmaUrl.trim() !== '';
   const hasPdf = p.pdfUrl && p.pdfUrl.trim() !== '';
-  if (p.screens && (p.screens.desktop || p.screens.mobile)) {
-    if (hasFigma) {
-      modalOpenLink.href = p.figmaUrl;
-      modalOpenLink.lastChild.textContent = ' Open in Figma';
-      modalOpenLink.style.display = 'inline-flex';
-    } else {
-      modalOpenLink.style.display = 'none';
-    }
-    showScreens(p);
+  if (p.prototypes && (p.prototypes.desktop || p.prototypes.mobile)) {
+    modalOpenLink.style.display = 'none';
+    showPrototypes(p);
   } else if (hasFigma) {
-    const embed = figmaEmbed(p.figmaUrl);
-    modalOpenLink.href = p.figmaUrl;
-    modalOpenLink.lastChild.textContent = ' Open in Figma';
-    modalOpenLink.style.display = 'inline-flex';
-    modalBody.innerHTML = `<iframe src="${embed}" title="${p.title}" allowfullscreen></iframe>`;
+    modalOpenLink.style.display = 'none';
+    modalBody.innerHTML = `<iframe src="${figmaEmbed(p.figmaUrl)}" title="${p.title}" allowfullscreen></iframe>`;
   } else if (hasPdf) {
     modalOpenLink.href = p.pdfUrl;
     modalOpenLink.lastChild.textContent = ' Open PDF';
