@@ -807,22 +807,60 @@ const projects = [
     image: "", pdfUrl: ""
   },
   {
-    company: "Other",
+    company: "Desa Potato Head",
     group: "Others",
-    title: "Coming Soon",
-    desc: "Placeholder — edit the projects array in the HTML file to add your real project details here.",
-    tag: "Other", color: "pink",
+    title: "SIKI",
+    desc: "Restaurant website — a Japan-to-Bali gastronomic experience, designed for desktop and mobile.",
+    tag: "Website", color: "yellow",
     tools: ["Figma"],
-    image: "", pdfUrl: ""
+    image: "images/siki-cover.jpg",
+    prototypes: {
+      desktop: "https://www.figma.com/proto/FvihRcaG5dsLWXbgNR5Gem/Portfolio?node-id=14-59650&viewport=211%2C-1038%2C0.03&t=CU8j1PSyej5oxBk0-1&scaling=contain&content-scaling=fixed&starting-point-node-id=14%3A59650&show-proto-sidebar=1&page-id=13%3A7718",
+      mobile:  "https://www.figma.com/proto/FvihRcaG5dsLWXbgNR5Gem/Portfolio?node-id=14-59910&viewport=211%2C-1038%2C0.03&t=CU8j1PSyej5oxBk0-1&scaling=contain&content-scaling=fixed&starting-point-node-id=14%3A59910&show-proto-sidebar=1&page-id=13%3A7718"
+    },
+    pdfUrl: ""
   },
   {
-    company: "Other",
+    company: "Desa Potato Head",
     group: "Others",
-    title: "Coming Soon",
-    desc: "Placeholder — edit the projects array in the HTML file to add your real project details here.",
-    tag: "Other", color: "blue",
+    title: "SHIFT",
+    desc: "Lifestyle packages website — an effortless, balanced way of living in Bali, on desktop and mobile.",
+    tag: "Website", color: "pink",
     tools: ["Figma"],
-    image: "", pdfUrl: ""
+    image: "images/shift-cover.jpg",
+    prototypes: {
+      desktop: "https://www.figma.com/proto/FvihRcaG5dsLWXbgNR5Gem/Portfolio?node-id=14-62987&viewport=211%2C-1038%2C0.03&t=CU8j1PSyej5oxBk0-1&scaling=contain&content-scaling=fixed&starting-point-node-id=14%3A62987&show-proto-sidebar=1&page-id=13%3A7718",
+      mobile:  "https://www.figma.com/proto/FvihRcaG5dsLWXbgNR5Gem/Portfolio?node-id=14-63883&viewport=211%2C-1038%2C0.03&t=CU8j1PSyej5oxBk0-1&scaling=contain&content-scaling=fixed&starting-point-node-id=14%3A63883&show-proto-sidebar=1&page-id=13%3A7718"
+    },
+    pdfUrl: ""
+  },
+  {
+    company: "Dijiwa Sanctuaries",
+    group: "Others",
+    title: "Blue Karma Children Foundation",
+    desc: "Non-profit website connecting donors, sponsors and local changemakers around children's education and well-being.",
+    tag: "Website", color: "blue",
+    tools: ["Figma"],
+    image: "images/bkcf-cover.jpg",
+    prototypes: {
+      desktop: "https://www.figma.com/proto/FvihRcaG5dsLWXbgNR5Gem/Portfolio?node-id=14-67245&viewport=211%2C-1038%2C0.03&t=CU8j1PSyej5oxBk0-1&scaling=contain&content-scaling=fixed&starting-point-node-id=14%3A67245&show-proto-sidebar=1&page-id=13%3A7718"
+    },
+    pdfUrl: ""
+  },
+  {
+    company: "Exploration",
+    group: "Others",
+    title: "Exploration — Kreditin",
+    desc: "Credit-application mobile app exploration, with a case study covering the problem statement, goals and verification flow.",
+    tag: "Mobile & Case Study", color: "yellow",
+    tools: ["Figma"],
+    image: "images/exploration-cover.jpg",
+    prototypes: {
+      mobile:  "https://www.figma.com/proto/FvihRcaG5dsLWXbgNR5Gem/Portfolio?node-id=15-88004&p=f&viewport=-964%2C190%2C0.17&t=CU8j1PSyej5oxBk0-1&scaling=contain&content-scaling=fixed&starting-point-node-id=15%3A88004&show-proto-sidebar=1&page-id=14%3A70237",
+      desktop: "https://www.figma.com/proto/FvihRcaG5dsLWXbgNR5Gem/Portfolio?node-id=15-88286&p=f&viewport=-964%2C190%2C0.17&t=CU8j1PSyej5oxBk0-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=15%3A88286&show-proto-sidebar=1&page-id=14%3A70237"
+    },
+    tabs: [["mobile","App"],["desktop","Case Study"]],
+    pdfUrl: ""
   },
 ];
 
@@ -899,7 +937,7 @@ function figmaEmbed(url) {
 }
 
 function showPrototypes(p) {
-  const kinds = [['desktop', 'Desktop'], ['mobile', 'Mobile']].filter(([k]) => p.prototypes[k]);
+  const kinds = (p.tabs || [['desktop', 'Desktop'], ['mobile', 'Mobile']]).filter(([k]) => p.prototypes[k]);
   modalBody.classList.add('shots');
   modalBody.innerHTML =
     (kinds.length > 1 ? `<div class="shot-tabs">${kinds.map(([k, l], i) => `<button class="shot-tab${i ? '' : ' active'}" data-k="${k}">${l}</button>`).join('')}</div>` : '') +
