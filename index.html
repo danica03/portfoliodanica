@@ -60,26 +60,32 @@ section { padding: 6rem 0; }
 .hero-wrap { position: relative; }
 .hero-art { position: relative; width: 100%; aspect-ratio: 1672 / 941; user-select: none; -webkit-user-select: none; }
 .hero-art .plate { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.layer { position: absolute; }
+.hero-art { overflow: hidden; }
+.hero-art .plate { transform: scale(1.03); will-change: transform; }
+.layer { position: absolute; will-change: transform; pointer-events: none; }
 .layer img { width: 100%; height: 100%; display: block; pointer-events: none; will-change: transform; }
-.layer .hit { position: absolute; inset: 0; cursor: pointer; }
-.layer.idle { animation: idle var(--idle, 5s) ease-in-out infinite; }
-@keyframes idle { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-.layer img.go { animation-duration: .95s; animation-timing-function: cubic-bezier(.3,1.4,.5,1); animation-iteration-count: 1; }
-.l-tilt img.go   { animation-name: k-tilt; }
-.l-sway img.go   { animation-name: k-sway; }
-.l-wobble img.go { animation-name: k-wobble; }
-.l-hop img.go    { animation-name: k-hop; }
-.l-float img.go  { animation-name: k-float; }
-.l-spin img.go   { animation-name: k-spin; animation-duration: 1.1s; }
-.l-pulse img.go  { animation-name: k-pulse; animation-duration: .8s; }
-@keyframes k-tilt   { 0%{transform:rotate(0)} 25%{transform:rotate(-2.4deg)} 55%{transform:rotate(1.9deg)} 80%{transform:rotate(-.8deg)} 100%{transform:rotate(0)} }
-@keyframes k-sway   { 0%{transform:rotate(0)} 25%{transform:rotate(3.5deg)} 55%{transform:rotate(-3deg)} 80%{transform:rotate(1.2deg)} 100%{transform:rotate(0)} }
-@keyframes k-wobble { 0%{transform:rotate(0)} 25%{transform:rotate(5deg)} 55%{transform:rotate(-4deg)} 80%{transform:rotate(1.5deg)} 100%{transform:rotate(0)} }
-@keyframes k-hop    { 0%{transform:translateY(0) rotate(0)} 35%{transform:translateY(-16px) rotate(-1.5deg)} 65%{transform:translateY(2px) rotate(.8deg)} 100%{transform:translateY(0) rotate(0)} }
-@keyframes k-float  { 0%{transform:translateY(0) scale(1) rotate(0)} 40%{transform:translateY(-12px) scale(1.05) rotate(-1.8deg)} 100%{transform:translateY(0) scale(1) rotate(0)} }
-@keyframes k-spin   { 0%{transform:rotate(0)} 100%{transform:rotate(360deg)} }
-@keyframes k-pulse  { 0%{transform:scale(1)} 35%{transform:scale(1.4) rotate(-8deg)} 70%{transform:scale(.92)} 100%{transform:scale(1)} }
+.hero-glow { position: absolute; left: 0; top: 0; width: 46%; aspect-ratio: 1; margin: -23% 0 0 -23%; border-radius: 50%; pointer-events: none; opacity: 0; transition: opacity .5s; background: radial-gradient(closest-side, rgba(255,255,255,.55), rgba(255,255,255,0)); mix-blend-mode: soft-light; will-change: transform; }
+#hero.is-hover .hero-glow { opacity: 1; }
+.hero-copy > * { opacity: 0; transform: translateY(18px); animation: rise .9s cubic-bezier(.2,.7,.2,1) forwards; }
+.hero-copy > *:nth-child(1) { animation-delay: .15s; } .hero-copy > *:nth-child(2) { animation-delay: .3s; } .hero-copy > *:nth-child(3) { animation-delay: .45s; } .hero-copy > *:nth-child(4) { animation-delay: .6s; }
+@keyframes rise { to { opacity: 1; transform: none; } }
+/* site-wide motion */
+.progress { position: fixed; top: 0; left: 0; height: 3px; width: 100%; z-index: 300; transform-origin: 0 50%; transform: scaleX(0); background: linear-gradient(90deg, var(--pink), var(--blue)); pointer-events: none; }
+.cursor-ring { position: fixed; left: 0; top: 0; z-index: 9999; width: 38px; height: 38px; margin: -19px 0 0 -19px; border-radius: 50%; border: 1.5px solid rgba(26,26,26,.55); pointer-events: none; opacity: 0; transition: opacity .25s, width .25s, height .25s, margin .25s, background .25s, border-color .25s; display: flex; align-items: center; justify-content: center; font: 600 10px/1 var(--font-sans); letter-spacing: .08em; text-transform: uppercase; color: #fff; will-change: transform; }
+.cursor-ring.on { opacity: 1; }
+.cursor-ring.big { width: 78px; height: 78px; margin: -39px 0 0 -39px; background: rgba(26,26,26,.88); border-color: transparent; }
+.cursor-ring.link { width: 56px; height: 56px; margin: -28px 0 0 -28px; background: rgba(254,158,171,.3); border-color: var(--pink); }
+.cursor-dot { position: fixed; left: 0; top: 0; z-index: 9999; width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 50%; background: var(--text); pointer-events: none; opacity: 0; will-change: transform; transition: opacity .2s; }
+.cursor-dot.on { opacity: 1; }
+.cursor-dot.hide { opacity: 0; }
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s); }
+.reveal.in { opacity: 1; transform: none; }
+.project-card { transform-style: preserve-3d; will-change: transform; }
+.project-card.tilting { transition: box-shadow .25s, border-color .25s; }
+.project-card:hover { transform: none; }
+.project-card.reveal, .project-card.reveal.in { transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1), box-shadow .25s, border-color .25s; transition-delay: var(--d, 0s); }
+@media (hover: none), (pointer: coarse) { .cursor-ring, .cursor-dot { display: none; } }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } .hero-copy > * { animation: none; opacity: 1; transform: none; } .hero-glow { display: none; } }
 .hero-scrim { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, rgba(24,18,34,.62) 0%, rgba(24,18,34,.38) 34%, rgba(24,18,34,0) 60%); }
 .hero-copy { position: absolute; left: var(--gutter); top: 50%; transform: translateY(-50%); max-width: min(440px, 30vw); color: #fff; pointer-events: none; }
 .hero-eyebrow { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,.8); margin-bottom: 1rem; }
@@ -87,7 +93,6 @@ section { padding: 6rem 0; }
 .hero-desc { font-size: clamp(.92rem, 1.15vw, 1.05rem); line-height: 1.65; color: rgba(255,255,255,.9); margin-bottom: 1.75rem; }
 .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; background: #111; color: #fff; text-decoration: none; padding: 0.8rem 1.7rem; font-size: 0.9rem; font-weight: 600; border-radius: 100px; transition: transform 0.18s, background 0.18s; pointer-events: auto; }
 .btn-primary:hover { transform: translateY(-2px); background: #000; }
-@media (prefers-reduced-motion: reduce) { .layer.idle { animation: none; } .layer img.go { animation: none; } }
 
 /* ── SECTION HEADER ── */
 .section-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; }
@@ -218,6 +223,8 @@ footer { border-top: 1px solid var(--border); padding: 1.75rem var(--gutter); di
 </style>
 </head>
 <body>
+<div class="progress" id="progress"></div>
+<div class="cursor-ring" id="cursorRing"></div><div class="cursor-dot" id="cursorDot"></div>
 
 <!-- NAV -->
 <nav>
@@ -235,50 +242,40 @@ footer { border-top: 1px solid var(--border); padding: 1.75rem var(--gutter); di
   <div class="hero-wrap" id="about">
     <div class="hero-art" id="heroArt">
       <img class="plate" src="images/hero/plate.jpg" alt="Illustration of Danica working on a laptop, surrounded by design, email and analytics cards" fetchpriority="high" />
-        <div class="layer l-sway" data-name="plant" style="left:82.416%;top:58.130%;width:15.431%;height:37.726%;">
-          <img src="images/hero/plant.webp" alt="" draggable="false" style="transform-origin:47.3% 93.8%" />
-          <div class="hit" style="clip-path:polygon(79.07% 0.00%, 73.64% 0.00%, 67.05% 2.82%, 59.69% 3.10%, 56.59% 1.41%, 49.22% 1.41%, 42.64% 4.79%, 37.60% 3.66%, 31.01% 3.94%, 24.81% 7.61%, 22.09% 11.27%, 18.60% 12.68%, 15.89% 11.83%, 10.08% 11.83%, 7.36% 12.68%, 3.10% 16.06%, 1.16% 20.00%, 1.16% 25.92%, 4.65% 27.32%, 5.04% 30.14%, 3.49% 33.24%, 0.00% 36.06%, 0.00% 38.59%, 7.75% 43.10%, 10.85% 43.10%, 13.95% 40.85%, 16.67% 42.82%, 18.22% 62.25%, 19.77% 63.94%, 20.16% 67.04%, 18.60% 73.52%, 20.16% 74.08%, 21.32% 76.34%, 27.13% 78.31%, 27.52% 82.25%, 47.29% 82.82%, 48.84% 83.66%, 49.22% 89.86%, 44.57% 94.93%, 45.35% 99.44%, 56.20% 99.44%, 62.02% 95.77%, 71.71% 97.18%, 77.52% 91.83%, 76.74% 87.89%, 86.05% 81.69%, 88.37% 77.46%, 96.12% 75.77%, 96.12% 72.39%, 99.61% 70.42%, 99.22% 62.54%, 91.86% 56.34%, 89.15% 51.83%, 89.15% 45.63%, 85.27% 41.41%, 88.37% 38.59%, 90.70% 41.13%, 93.80% 41.13%, 98.06% 36.90%, 98.06% 34.65%, 94.19% 32.39%, 96.51% 29.30%, 93.80% 7.89%, 88.76% 6.48%, 82.56% 0.85%)"></div>
+        <div class="layer" data-name="plant" data-depth="13" style="left:82.476%;top:58.236%;width:15.371%;height:37.620%;">
+          <img src="images/hero/plant.webp" alt="" draggable="false" style="transform-origin:47.1% 93.8%" />
         </div>
-        <div class="layer l-wobble" data-name="coffee" style="left:25.837%;top:56.748%;width:9.749%;height:35.707%;">
-          <img src="images/hero/coffee.webp" alt="" draggable="false" style="transform-origin:47.9% 97.0%" />
-          <div class="hit" style="clip-path:polygon(28.83% 0.00%, 24.54% 1.79%, 24.54% 4.17%, 30.67% 8.93%, 30.67% 22.92%, 22.09% 24.70%, 20.25% 31.55%, 7.98% 31.25%, 2.45% 33.63%, 1.84% 39.58%, 6.75% 41.07%, 12.27% 69.64%, 10.43% 81.85%, 7.98% 82.74%, 0.61% 82.74%, 1.84% 86.01%, 7.36% 86.01%, 9.82% 86.90%, 9.20% 88.39%, 3.68% 90.18%, 3.68% 95.83%, 9.82% 97.92%, 30.06% 99.70%, 62.58% 99.70%, 82.82% 98.21%, 90.80% 96.13%, 90.80% 90.48%, 82.82% 87.80%, 82.82% 86.01%, 85.28% 85.12%, 94.48% 84.82%, 93.87% 81.85%, 88.34% 81.85%, 84.05% 80.36%, 85.89% 60.71%, 97.55% 40.77%, 99.39% 34.52%, 93.25% 34.23%, 87.73% 32.14%, 56.44% 31.55%, 53.99% 30.65%, 46.63% 8.93%, 34.36% 0.00%)"></div>
+        <div class="layer" data-name="coffee" data-depth="12" style="left:26.077%;top:56.854%;width:9.390%;height:35.600%;">
+          <img src="images/hero/coffee.webp" alt="" draggable="false" style="transform-origin:47.1% 97.0%" />
         </div>
-        <div class="layer l-hop" data-name="books" style="left:68.242%;top:79.171%;width:18.959%;height:14.028%;">
+        <div class="layer" data-name="books" data-depth="10" style="left:68.361%;top:79.171%;width:18.720%;height:14.028%;">
           <img src="images/hero/books.webp" alt="" draggable="false" style="transform-origin:50% 50%" />
-          <div class="hit" style="clip-path:polygon(99.05% 50.76%, 97.16% 43.94%, 94.64% 41.67%, 94.95% 19.70%, 91.17% 11.36%, 61.83% 0.00%, 53.63% 0.00%, 21.77% 7.58%, 20.82% 3.79%, 18.30% 3.79%, 18.30% 7.58%, 17.03% 9.85%, 6.31% 9.85%, 2.84% 15.15%, 2.84% 21.97%, 4.73% 26.52%, 4.73% 34.09%, 0.63% 43.94%, 0.63% 51.52%, 2.52% 56.82%, 2.52% 65.91%, 0.00% 71.21%, 0.00% 78.03%, 5.99% 87.88%, 13.56% 87.88%, 32.18% 99.24%, 39.75% 99.24%, 95.27% 83.33%, 99.37% 71.97%)"></div>
         </div>
-        <div class="layer l-wobble" data-name="pens" style="left:71.531%;top:62.806%;width:6.639%;height:18.704%;">
-          <img src="images/hero/pens.webp" alt="" draggable="false" style="transform-origin:48.6% 94.9%" />
-          <div class="hit" style="clip-path:polygon(92.79% 1.14%, 72.97% 0.00%, 63.96% 6.25%, 54.95% 6.25%, 46.85% 1.14%, 29.73% 1.14%, 17.12% 6.82%, 13.51% 31.25%, 0.00% 37.50%, 0.00% 68.18%, 3.60% 69.89%, 0.90% 99.43%, 98.20% 94.32%, 98.20% 89.77%, 94.59% 88.07%, 97.30% 38.07%, 90.09% 33.52%, 89.19% 29.55%, 96.40% 14.77%, 96.40% 3.41%)"></div>
+        <div class="layer" data-name="pens" data-depth="9" style="left:71.531%;top:62.806%;width:6.519%;height:18.704%;">
+          <img src="images/hero/pens.webp" alt="" draggable="false" style="transform-origin:49.5% 94.9%" />
         </div>
-        <div class="layer l-spin idle" data-name="donut" style="left:4.964%;top:58.980%;width:6.400%;height:11.583%;--idle:4.8s;">
+        <div class="layer" data-name="donut" data-depth="14" style="left:4.964%;top:59.086%;width:6.400%;height:11.477%;">
           <img src="images/hero/donut.webp" alt="" draggable="false" style="transform-origin:50% 50%" />
-          <div class="hit" style="clip-path:polygon(29.91% 2.75%, 19.63% 8.26%, 7.48% 20.18%, 1.87% 30.28%, 1.87% 67.89%, 8.41% 79.82%, 28.97% 96.33%, 39.25% 99.08%, 70.09% 96.33%, 88.79% 82.57%, 97.20% 67.89%, 99.07% 39.45%, 90.65% 19.27%, 79.44% 8.26%, 58.88% 0.00%)"></div>
         </div>
-        <div class="layer l-pulse idle" data-name="heart" style="left:16.208%;top:10.521%;width:3.708%;height:7.545%;--idle:4.2s;">
+        <div class="layer" data-name="heart" data-depth="18" style="left:16.268%;top:10.627%;width:3.648%;height:7.226%;">
           <img src="images/hero/heart.webp" alt="" draggable="false" style="transform-origin:50% 50%" />
-          <div class="hit" style="clip-path:polygon(59.68% 0.00%, 32.26% 21.13%, 8.06% 22.54%, 0.00% 30.99%, 0.00% 50.70%, 27.42% 78.87%, 59.68% 98.59%, 70.97% 98.59%, 82.26% 80.28%, 96.77% 69.01%, 98.39% 22.54%, 83.87% 1.41%)"></div>
         </div>
-        <div class="layer l-float idle" data-name="mail" style="left:21.890%;top:15.834%;width:11.124%;height:16.366%;--idle:5.2s;">
+        <div class="layer" data-name="mail" data-depth="16" style="left:21.890%;top:15.834%;width:11.124%;height:16.259%;">
           <img src="images/hero/mail.webp" alt="" draggable="false" style="transform-origin:50% 50%" />
-          <div class="hit" style="clip-path:polygon(86.56% 6.49%, 80.11% 0.65%, 69.89% 0.00%, 47.85% 7.14%, 11.29% 10.39%, 10.22% 16.88%, 0.54% 28.57%, 0.00% 79.22%, 4.84% 94.81%, 9.68% 99.35%, 15.05% 99.35%, 73.12% 86.36%, 84.41% 93.51%, 88.71% 93.51%, 96.77% 79.87%, 99.46% 70.13%, 99.46% 56.49%, 95.70% 41.56%, 95.16% 18.83%, 89.25% 14.29%)"></div>
         </div>
-        <div class="layer l-float idle" data-name="team" style="left:10.945%;top:34.538%;width:16.806%;height:21.679%;--idle:6s;">
+        <div class="layer" data-name="team" data-depth="15" style="left:11.005%;top:34.644%;width:16.687%;height:21.573%;">
           <img src="images/hero/team.webp" alt="" draggable="false" style="transform-origin:50% 50%" />
-          <div class="hit" style="clip-path:polygon(91.46% 4.90%, 87.90% 0.49%, 81.49% 0.00%, 8.19% 14.71%, 2.85% 17.16%, 0.00% 23.04%, 0.00% 29.41%, 8.90% 95.59%, 12.81% 99.51%, 20.64% 99.51%, 92.88% 85.29%, 96.44% 83.33%, 99.29% 78.43%, 99.64% 70.10%)"></div>
         </div>
-        <div class="layer l-float idle" data-name="chart" style="left:72.368%;top:39.957%;width:15.431%;height:19.766%;--idle:5.6s;">
+        <div class="layer" data-name="chart" data-depth="17" style="left:72.428%;top:39.957%;width:15.371%;height:19.766%;">
           <img src="images/hero/chart.webp" alt="" draggable="false" style="transform-origin:50% 50%" />
-          <div class="hit" style="clip-path:polygon(93.41% 3.23%, 90.31% 0.00%, 81.78% 0.00%, 3.49% 13.98%, 0.00% 20.43%, 1.16% 36.56%, 0.00% 38.17%, 3.88% 87.63%, 5.43% 94.62%, 8.14% 98.39%, 18.99% 99.46%, 93.80% 87.63%, 99.22% 80.11%, 99.61% 69.35%, 94.96% 8.06%)"></div>
         </div>
-        <div class="layer l-float idle" data-name="browser" style="left:62.500%;top:14.984%;width:21.471%;height:24.017%;--idle:6.4s;">
+        <div class="layer" data-name="browser" data-depth="19" style="left:62.560%;top:15.090%;width:21.411%;height:23.911%;">
           <img src="images/hero/browser.webp" alt="" draggable="false" style="transform-origin:50% 50%" />
-          <div class="hit" style="clip-path:polygon(5.29% 4.87%, 0.00% 71.24%, 0.28% 76.99%, 2.51% 81.42%, 1.95% 86.28%, 3.62% 88.94%, 6.96% 89.82%, 10.03% 85.40%, 11.98% 89.38%, 14.48% 89.38%, 15.60% 86.73%, 17.83% 84.96%, 22.01% 86.28%, 23.40% 88.05%, 85.52% 99.56%, 90.53% 99.12%, 93.87% 94.69%, 94.99% 88.94%, 99.72% 29.20%, 99.44% 19.47%, 96.94% 14.60%, 88.30% 14.16%, 86.07% 11.95%, 13.65% 0.00%, 7.80% 0.88%)"></div>
         </div>
-        <div class="layer l-tilt" data-name="head" style="left:37.978%;top:12.965%;width:24.222%;height:40.595%;">
+        <div class="layer" data-name="head" data-depth="8" style="left:37.978%;top:12.965%;width:24.222%;height:40.595%;">
           <img src="images/hero/head.webp" alt="" draggable="false" style="transform-origin:55.6% 93.7%" />
-          <div class="hit" style="clip-path:polygon(23.21% 8.64%, 19.51% 14.14%, 17.04% 20.16%, 11.36% 44.24%, 0.99% 72.51%, 0.00% 78.53%, 0.74% 86.13%, 4.20% 86.39%, 6.42% 85.08%, 8.40% 85.34%, 13.09% 92.15%, 15.80% 94.50%, 86.17% 94.50%, 87.90% 93.46%, 90.86% 88.48%, 93.09% 86.39%, 99.51% 86.39%, 99.75% 83.51%, 97.78% 76.18%, 93.58% 67.54%, 91.60% 59.42%, 88.15% 51.57%, 87.90% 43.98%, 84.69% 33.77%, 80.00% 25.13%, 74.32% 18.06%, 59.26% 5.24%, 54.32% 2.36%, 47.90% 0.26%, 37.78% 0.52%, 31.85% 4.19%, 26.91% 5.50%)"></div>
         </div>
+      <div class="hero-glow" id="heroGlow"></div>
       <div class="hero-scrim"></div>
     </div>
     <div class="hero-copy">
@@ -977,13 +974,96 @@ modalClose.addEventListener('click', closeModal);
 backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-// Hero illustration: hover animations
-document.querySelectorAll('#heroArt .layer').forEach(l => {
-  const img = l.querySelector('img'), hit = l.querySelector('.hit');
-  const play = () => { img.classList.remove('go'); void img.offsetWidth; img.classList.add('go'); };
-  hit.addEventListener('pointerenter', play);
-  img.addEventListener('animationend', () => img.classList.remove('go'));
-});
+// ── Motion ──
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+  // Hero: smooth mouse parallax (+ idle drift, + scroll depth)
+  const hero = document.getElementById('hero'), art = document.getElementById('heroArt');
+  if (hero && art && !reduce) {
+    const plate = art.querySelector('.plate'), glow = document.getElementById('heroGlow');
+    const copy = hero.querySelector('.hero-copy');
+    const L = [...art.querySelectorAll('.layer')].map(el => ({ el, img: el.querySelector('img'), d: +el.dataset.depth, head: el.dataset.name === 'head', p: Math.random() * 6.28 }));
+    let tx = 0, ty = 0, cx = 0, cy = 0, gx = 0, gy = 0, gtx = 0, gty = 0, vis = true, raf = 0;
+    hero.addEventListener('pointermove', e => {
+      if (e.pointerType === 'touch') return;
+      const r = art.getBoundingClientRect();
+      tx = clamp(((e.clientX - r.left) / r.width - .5) * 2, -1, 1);
+      ty = clamp(((e.clientY - r.top) / r.height - .5) * 2, -1, 1);
+      gtx = e.clientX - r.left; gty = e.clientY - r.top;
+      hero.classList.add('is-hover');
+    });
+    hero.addEventListener('pointerleave', () => { tx = ty = 0; hero.classList.remove('is-hover'); });
+    new IntersectionObserver(es => { vis = es[0].isIntersecting; if (vis && !raf) raf = requestAnimationFrame(frame); }).observe(hero);
+    function frame(t) {
+      raf = 0; if (!vis) return;
+      cx += (tx - cx) * .06; cy += (ty - cy) * .06;
+      gx += (gtx - gx) * .12; gy += (gty - gy) * .12;
+      const k = art.clientWidth / 1440, sy = clamp(scrollY, 0, 800);
+      plate.style.transform = `translate3d(${cx * -4 * k}px, ${(cy * -4 + sy * .03) * k}px, 0) scale(1.03)`;
+      L.forEach(o => {
+        const idle = o.d / 14, ix = Math.sin(t / 1900 + o.p) * 3 * idle, iy = Math.cos(t / 1500 + o.p) * 4 * idle;
+        o.el.style.transform = `translate3d(${(cx * o.d + ix) * k}px, ${(cy * o.d + iy - sy * o.d * .012) * k}px, 0)`;
+        if (o.head) o.img.style.transform = `rotate(${(cx * 2.2 + Math.sin(t / 2300) * .35).toFixed(3)}deg)`;
+      });
+      if (copy) copy.style.translate = `${cx * -6}px ${cy * -4}px`;
+      glow.style.transform = `translate3d(${gx}px, ${gy}px, 0)`;
+      raf = requestAnimationFrame(frame);
+    }
+    raf = requestAnimationFrame(frame);
+  }
+
+  // Scroll progress + reveal on scroll
+  const bar = document.getElementById('progress');
+  const onScroll = () => { const h = document.documentElement.scrollHeight - innerHeight; bar.style.transform = `scaleX(${h > 0 ? scrollY / h : 0})`; };
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  const targets = [...document.querySelectorAll('.section-eyebrow, .section-title, .section-desc, .group-head, .project-card, #skills .skill-tag, #skills h3, .contact-link, .contact-detail')];
+  if (reduce || !('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { const t = e.target; t.classList.add('in'); io.unobserve(t); setTimeout(() => { t.classList.remove('reveal', 'in'); t.style.removeProperty('--d'); }, 1400); } }), { rootMargin: '0px 0px -8% 0px', threshold: .06 });
+  targets.forEach(el => {
+    const sib = el.parentElement ? [...el.parentElement.children].indexOf(el) : 0;
+    el.style.setProperty('--d', (el.classList.contains('project-card') ? (sib % 3) * .08 : 0) + 's');
+    el.classList.add('reveal'); io.observe(el);
+  });
+
+  if (!fine) return;
+  // Custom cursor (ring follows with lag, grows on links and project cards)
+  const ring = document.getElementById('cursorRing'), dot = document.getElementById('cursorDot');
+  let mx = -100, my = -100, rx = -100, ry = -100;
+  addEventListener('pointermove', e => {
+    mx = e.clientX; my = e.clientY; ring.classList.add('on'); dot.classList.add('on');
+    const t = e.target.closest ? e.target : null;
+    const inModal = t && t.closest('.modal-backdrop.open');
+    const card = t && t.closest('.project-card'), link = t && t.closest('a, button, .shot-tab');
+    ring.classList.toggle('big', !!card && !inModal);
+    ring.classList.toggle('link', !!link && !card && !inModal);
+    ring.textContent = card && !inModal ? 'View' : '';
+    dot.classList.toggle('hide', !!inModal || !!card);
+    ring.style.opacity = inModal ? 0 : '';
+  });
+  document.addEventListener('mouseleave', () => { ring.classList.remove('on'); dot.classList.remove('on'); });
+  (function loop() { rx += (mx - rx) * .16; ry += (my - ry) * .16;
+    ring.style.transform = `translate3d(${rx}px, ${ry}px, 0)`; dot.style.transform = `translate3d(${mx}px, ${my}px, 0)`; requestAnimationFrame(loop); })();
+
+  // Magnetic buttons
+  document.querySelectorAll('.btn-primary, .nav-cta').forEach(b => {
+    b.addEventListener('pointermove', e => { const r = b.getBoundingClientRect(); b.style.translate = `${(e.clientX - r.left - r.width / 2) * .25}px ${(e.clientY - r.top - r.height / 2) * .35}px`; });
+    b.addEventListener('pointerleave', () => { b.style.translate = '0 0'; });
+    b.style.transition = 'transform .18s, background .18s, translate .25s cubic-bezier(.2,.7,.2,1)';
+  });
+
+  // Project cards: 3D tilt following the mouse
+  document.querySelectorAll('.project-card').forEach(c => {
+    c.addEventListener('pointermove', e => {
+      const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      c.classList.add('tilting');
+      c.style.transform = `perspective(900px) rotateX(${(-y * 7).toFixed(2)}deg) rotateY(${(x * 9).toFixed(2)}deg) translateY(-4px)`;
+    });
+    c.addEventListener('pointerleave', () => { c.classList.remove('tilting'); c.style.transform = ''; });
+  });
+})();
 </script>
 </body>
 </html>
