@@ -210,6 +210,9 @@ section { padding: 6rem 0; }
 .shot-tab:hover { border-color: var(--text); color: var(--text); }
 .shot-tab.active { background: var(--text); border-color: var(--text); color: var(--bg); }
 .shot-view { flex: 1; min-height: 0; display: flex; justify-content: center; background: var(--bg2); }
+.proto-open { align-self: center; display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: 1.5rem; text-align: center; max-width: 340px; }
+.proto-open img { width: 100%; border-radius: 12px; border: 1px solid var(--border); }
+.proto-open p { font-size: .9rem; color: var(--text-muted); }
 .shot-view iframe { width: 100%; height: 100%; border: none; }
 .shot-view.mobile iframe { max-width: 420px; }
 
@@ -226,6 +229,8 @@ section { padding: 6rem 0; }
   nav { grid-template-columns: 1fr auto; }
   .nav-name { font-size: .7rem; max-width: 55vw; line-height: 1.3; }
   .nav-links { gap: 1rem; }
+  #modalOpenLink { display: none !important; }
+  .modal-title { font-size: 1rem; }
   .nav-links a { font-size: .8rem; }
   .skill-groups > div { grid-template-columns: 1fr; gap: .5rem; }
   .cta-details { grid-template-columns: 1fr; gap: 1.25rem; }
@@ -945,7 +950,14 @@ function showPrototypes(p) {
   const view = modalBody.querySelector('.shot-view');
   const render = k => {
     view.className = 'shot-view ' + k;
-    view.innerHTML = `<iframe src="${figmaEmbed(p.prototypes[k])}" title="${p.title} — ${k} prototype" allowfullscreen></iframe>`;
+    const url = p.prototypes[k];
+    modalOpenLink.href = url; modalOpenLink.lastChild.textContent = ' Open in Figma'; modalOpenLink.style.display = 'inline-flex';
+    if (window.matchMedia('(pointer: coarse), (max-width: 768px)').matches) {
+      // Figma prototype embeds don't load reliably inside iframes on phones: open the prototype directly
+      view.innerHTML = `<div class="proto-open">${p.image ? `<img src="${p.image}" alt="">` : ''}<p>Best viewed in Figma on mobile.</p><a class="btn-primary" href="${url}" target="_blank" rel="noopener">Open prototype ↗</a></div>`;
+    } else {
+      view.innerHTML = `<iframe src="${figmaEmbed(url)}" title="${p.title} — ${k} prototype" allowfullscreen></iframe>`;
+    }
   };
   modalBody.querySelectorAll('.shot-tab').forEach(btn => btn.addEventListener('click', () => {
     modalBody.querySelectorAll('.shot-tab').forEach(b => b.classList.toggle('active', b === btn));
@@ -960,7 +972,6 @@ function openModal(p) {
   const hasFigma = p.figmaUrl && p.figmaUrl.trim() !== '';
   const hasPdf = p.pdfUrl && p.pdfUrl.trim() !== '';
   if (p.prototypes && (p.prototypes.desktop || p.prototypes.mobile)) {
-    modalOpenLink.style.display = 'none';
     showPrototypes(p);
   } else if (hasFigma) {
     modalOpenLink.style.display = 'none';
