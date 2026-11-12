@@ -97,7 +97,7 @@ section { padding: 6rem 0; }
 .reveal.in { opacity: 1; transform: none; }
 .project-card { will-change: transform; }
 .card-thumb .glow, .card-thumb .shine { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .35s; z-index: 3; }
-.card-thumb .glow { backdrop-filter: blur(6px) brightness(1.12); -webkit-backdrop-filter: blur(6px) brightness(1.12); -webkit-mask-image: var(--m, none); mask-image: var(--m, none); }
+.card-thumb .glow { backdrop-filter: blur(4px) brightness(1.06); -webkit-backdrop-filter: blur(4px) brightness(1.06); -webkit-mask-image: var(--m, none); mask-image: var(--m, none); }
 .card-thumb .shine { background: var(--g, none); mix-blend-mode: soft-light; z-index: 4; }
 .project-card.glowing .glow, .project-card.glowing .shine { opacity: 1; }
 .project-card.tilting { transition: box-shadow .25s, border-color .25s; }
@@ -1021,13 +1021,13 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
         float m=texture2D(trail,u).r; m=max(m-.05,0.)/.95;
         float e=.006;
         vec2 g=vec2(texture2D(trail,u+vec2(e,0.)).r-texture2D(trail,u-vec2(e,0.)).r,texture2D(trail,u+vec2(0.,e)).r-texture2D(trail,u-vec2(0.,e)).r);
-        vec2 b=(u+g*.05-.5)*s+.5+(1.-s)*(vec2(1.,.5)-.5);
+        vec2 b=(u+g*.025-.5)*s+.5+(1.-s)*(vec2(1.,.5)-.5);
         vec4 sharp=texture2D(img,b);
-        float r=m*.02; vec4 bl=vec4(0.);
+        float r=m*.011; vec4 bl=vec4(0.);
         for(int i=0;i<12;i++){float a=float(i)*.5236;vec2 d=vec2(cos(a),sin(a));bl+=texture2D(img,b+d*r)+texture2D(img,b+d*r*.5);}
         bl/=24.;
-        vec4 c=mix(sharp,bl,smoothstep(0.,.45,m));
-        c.rgb+=smoothstep(.1,1.,m)*.3*vec3(1.,.97,.95);
+        vec4 c=mix(sharp,bl,smoothstep(0.,.9,m));
+        c.rgb+=smoothstep(0.,1.,m)*.14*vec3(1.,.97,.95);
         gl_FragColor=vec4(c.rgb,1.);
       }`;
     const sh = (t, s) => { const o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); return o; };
@@ -1057,20 +1057,20 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
     }
     function frame() {
       raf = 0; if (!vis) return;
-      tx.globalCompositeOperation = 'source-over'; tx.fillStyle = 'rgba(0,0,0,.035)'; tx.fillRect(0, 0, tc.width, tc.height);
-      energy *= .965; draw();
+      tx.globalCompositeOperation = 'source-over'; tx.fillStyle = 'rgba(0,0,0,.028)'; tx.fillRect(0, 0, tc.width, tc.height);
+      energy *= .975; draw();
       if (energy > .02) raf = requestAnimationFrame(frame);
     }
     function kick() { if (!raf && vis) raf = requestAnimationFrame(frame); }
     let tgt = null, sm = null;
     function stamp(x, y) {
       const px = last ? last.x : x, py = last ? last.y : y, d = Math.hypot(x - px, y - py);
-      const a = clamp(d / 12, .15, .7), rad = tc.width * .045;
+      const a = clamp(d / 16, .1, .5), rad = tc.width * .085;
       tx.globalCompositeOperation = 'lighter';
-      const n = Math.max(1, Math.ceil(d / (rad * .22)));
+      const n = Math.max(1, Math.ceil(d / (rad * .18)));
       for (let i = 1; i <= n; i++) {
         const cx = px + (x - px) * i / n, cy = py + (y - py) * i / n, g = tx.createRadialGradient(cx, cy, 0, cx, cy, rad);
-        g.addColorStop(0, `rgba(255,255,255,${.32 * a})`); g.addColorStop(1, 'rgba(255,255,255,0)');
+        g.addColorStop(0, `rgba(255,255,255,${.2 * a})`); g.addColorStop(.45, `rgba(255,255,255,${.09 * a})`); g.addColorStop(1, 'rgba(255,255,255,0)');
         tx.fillStyle = g; tx.fillRect(cx - rad, cy - rad, rad * 2, rad * 2);
       }
       last = { x, y };
@@ -1078,7 +1078,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
     function follow() {
       fraf = 0; if (!tgt) return;
       if (!sm) sm = { x: tgt.x, y: tgt.y };
-      sm.x += (tgt.x - sm.x) * .22; sm.y += (tgt.y - sm.y) * .22;
+      sm.x += (tgt.x - sm.x) * .12; sm.y += (tgt.y - sm.y) * .12;
       stamp(sm.x, sm.y); energy = 1; kick();
       if (Math.hypot(tgt.x - sm.x, tgt.y - sm.y) > .3) fraf = requestAnimationFrame(follow);
     }
@@ -1180,9 +1180,9 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
     let tx = 0, ty = 0, on = false, raf = 0, still = 0;
     const render = () => {
       raf = 0; let lx = tx, ly = ty, moved = 0;
-      pts.forEach((p, i) => { const k = .2 - i * .018; const dx = lx - p.x, dy = ly - p.y; p.x += dx * k; p.y += dy * k; moved += Math.abs(dx) + Math.abs(dy); lx = p.x; ly = p.y; });
-      const m = pts.map((p, i) => { const r = 50 - i * 5, a = (.8 - i * .09).toFixed(2); return `radial-gradient(circle ${r}px at ${p.x.toFixed(1)}px ${p.y.toFixed(1)}px, rgba(0,0,0,${a}), transparent)`; }).join(',');
-      const g = pts.map((p, i) => `radial-gradient(circle ${44 - i * 4}px at ${p.x.toFixed(1)}px ${p.y.toFixed(1)}px, rgba(255,255,255,${(.5 - i * .06).toFixed(2)}), transparent)`).join(',');
+      pts.forEach((p, i) => { const k = .14 - i * .012; const dx = lx - p.x, dy = ly - p.y; p.x += dx * k; p.y += dy * k; moved += Math.abs(dx) + Math.abs(dy); lx = p.x; ly = p.y; });
+      const m = pts.map((p, i) => { const r = 64 - i * 6, a = (.55 - i * .07).toFixed(2); return `radial-gradient(circle ${r}px at ${p.x.toFixed(1)}px ${p.y.toFixed(1)}px, rgba(0,0,0,${a}), transparent 100%)`; }).join(',');
+      const g = pts.map((p, i) => `radial-gradient(circle ${56 - i * 5}px at ${p.x.toFixed(1)}px ${p.y.toFixed(1)}px, rgba(255,255,255,${(.3 - i * .04).toFixed(2)}), transparent)`).join(',');
       th.style.setProperty('--m', m); th.style.setProperty('--g', g);
       if (on || moved > 1) raf = requestAnimationFrame(render);
     };
